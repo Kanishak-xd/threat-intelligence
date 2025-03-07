@@ -43,16 +43,13 @@ app.get("/api/logs", async (req, res) => {
   }
 });
 
-// API route to fetch threat intelligence from OTX
-app.get("/api/threat-intel", async (req, res) => {
+app.get("/api/test-data", async (req, res) => {
   try {
-    const response = await fetch(
-      "https://otx.alienvault.com/api/v1/pulses/subscribed"
-    );
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const data = await response.json();
-    res.json(data);
+    res.json(data.slice(0, 5)); // Only send first 5 posts
   } catch (error) {
-    res.status(500).json({ message: "Error fetching threat intel", error });
+    res.status(500).json({ message: "Error fetching test data", error });
   }
 });
 

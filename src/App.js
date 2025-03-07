@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 function App() {
-  const [threats, setThreats] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetch("https://threat-intelligence-214n.onrender.com/api/threat-intel")
+    fetch("https://threat-intelligence-214n.onrender.com/api/test-data")
       .then((res) => res.json())
       .then((data) => {
-        setThreats(data.results.slice(0, 5)); // Display only top 5 threats
+        setPosts(data);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -15,10 +15,10 @@ function App() {
   return (
     <div>
       <h1>Threat Intelligence Dashboard</h1>
-      <h2>Recent Threats</h2>
+      <h2>Sample Posts (Test Data)</h2>
       <ul>
-        {threats.map((threat, index) => (
-          <li key={index}>{threat.name}</li>
+        {posts.map((post, index) => (
+          <li key={index}>{post.title}</li>
         ))}
       </ul>
     </div>
