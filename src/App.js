@@ -4,7 +4,7 @@ function App() {
   const [threats, setThreats] = useState([]);
 
   useEffect(() => {
-    fetch("https://threat-intelligence-214n.onrender.com")
+    fetch("https://threat-intelligence-214n.onrender.com/api/threat-intel")
       .then((res) => res.json())
       .then((data) => {
         setThreats(data.results.slice(0, 5)); // Display only top 5 threats
