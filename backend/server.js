@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
@@ -34,7 +35,7 @@ app.get("/api/cowrie-data", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.send("Backend is running!");
+  res.send("Backend is running and connected to MongoDB!");
 });
 
 app.listen(PORT, () => {
