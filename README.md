@@ -8,3 +8,8 @@
 - Devansh
 
 made in MERN Stack
+
+- Frontend - React
+- Backend - ExpressJS
+- Database - MongoDB Atlas
+- Honeypot - AWS EC2 Cowrie
