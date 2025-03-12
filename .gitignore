@@ -4,10 +4,13 @@
 /node_modules
 /.pnp
 .pnp.js
+/cowrie-key.pem
 
 # Ignore node_modules for frontend & backend
 node_modules/
 backend/node_modules/
+backend/cowrie.json
+backend/cowrie.txt
 
 # Ignore environment variables
 .env

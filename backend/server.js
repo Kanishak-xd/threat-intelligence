@@ -9,8 +9,8 @@ const app = express();
 const PORT = process.env.PORT;
 
 const EC2_IP = process.env.EC2_IP;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const LOG_PATH = "/srv/cowrie/log/cowrie.json";
+const PRIVATE_KEY = `"${process.env.PRIVATE_KEY}"`;
+const LOG_PATH = "/opt/cowrie/var/log/cowrie/";
 const LOCAL_LOG_COPY = "cowrie.json";
 
 app.use(cors());
@@ -34,7 +34,7 @@ const Cowrie = mongoose.model("Cowrie", CowrieSchema, "cowrie");
 // Function to fetch logs via SCP
 function fetchCowrieLogs() {
   console.log("Fetching logs from Cowrie...");
-  const scpCommand = `scp -i ${PRIVATE_KEY} ubuntu@${EC2_IP}:${LOG_PATH} ${LOCAL_LOG_COPY}`;
+  const scpCommand = `scp -i ${PRIVATE_KEY} ubuntu@${EC2_IP}:${LOG_PATH}cowrie.json ${LOCAL_LOG_COPY}`;
 
   exec(scpCommand, (error, stdout, stderr) => {
     if (error) {
@@ -45,8 +45,8 @@ function fetchCowrieLogs() {
   });
 }
 
-// Fetch logs every 5 minutes
-setInterval(fetchCowrieLogs, 5 * 60 * 1000);
+// Fetch logs every 1 minute
+setInterval(fetchCowrieLogs, 1 * 60 * 1000);
 
 // API to fetch and store logs in MongoDB
 app.get("/api/fetch-cowrie-logs", async (req, res) => {
