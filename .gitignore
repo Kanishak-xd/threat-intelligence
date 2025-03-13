@@ -11,6 +11,8 @@ node_modules/
 backend/node_modules/
 backend/cowrie.json
 backend/cowrie.txt
+backend/filtered_logs.json
+backend/logs.json
 
 # Ignore environment variables
 .env
