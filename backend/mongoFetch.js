@@ -17,22 +17,33 @@ mongoose
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("MongoDB connection error:", err));
 
-// Define Schema
-const CowrieSchema = new mongoose.Schema({}, { strict: false });
-const Cowrie = mongoose.model("Cowrie", CowrieSchema, "auth");
+const collections = [
+  "auth",
+  "downloads",
+  "event",
+  "input",
+  "sensors",
+  "sessions",
+];
 
 // Fetch & store logs in logs.json
 async function fetchLogs() {
   try {
     console.log("Fetching logs from MongoDB...");
-    const logs = await Cowrie.find().limit(10);
 
-    if (logs.length === 0) {
-      console.log("No logs found");
-      return;
+    let allLogs = {};
+
+    for (let collection of collections) {
+      const Model = mongoose.model(
+        collection,
+        new mongoose.Schema({}, { strict: false }),
+        collection
+      );
+      const logs = await Model.find();
+      allLogs[collection] = logs;
     }
 
-    fs.writeFileSync("logs.json", JSON.stringify(logs, null, 2));
+    fs.writeFileSync("logs.json", JSON.stringify(allLogs, null, 2));
     console.log("Logs saved to logs.json");
   } catch (error) {
     console.error("Error fetching logs:", error);
