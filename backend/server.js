@@ -49,34 +49,34 @@ function fetchCowrieLogs() {
 setInterval(fetchCowrieLogs, 1 * 60 * 1000);
 
 // API to fetch and store logs in MongoDB
-app.get("/api/fetch-cowrie-logs", async (req, res) => {
-  try {
-    const fileData = fs.readFileSync(LOCAL_LOG_COPY, "utf-8");
-    if (!fileData) throw new Error("Empty log file");
-    const logs = JSON.parse(fileData);
-    if (!Array.isArray(logs))
-      throw new Error("Logs are not in an array format");
+// app.get("/api/fetch-cowrie-logs", async (req, res) => {
+//   try {
+//     const fileData = fs.readFileSync(LOCAL_LOG_COPY, "utf-8");
+//     if (!fileData) throw new Error("Empty log file");
+//     const logs = JSON.parse(fileData);
+//     if (!Array.isArray(logs))
+//       throw new Error("Logs are not in an array format");
 
-    await Cowrie.insertMany(logs);
-    console.log("Logs inserted into MongoDB");
-    res.json({ message: "Logs fetched and stored successfully!" });
-  } catch (error) {
-    console.error("Error processing logs:", error);
-    res.status(500).json({ message: "Error fetching logs", error });
-  }
-});
+//     await Cowrie.insertMany(logs);
+//     console.log("Logs inserted into MongoDB");
+//     res.json({ message: "Logs fetched and stored successfully!" });
+//   } catch (error) {
+//     console.error("Error processing logs:", error);
+//     res.status(500).json({ message: "Error fetching logs", error });
+//   }
+// });
 
 // API to retrieve logs from MongoDB
-app.get("/api/cowrie-data", async (req, res) => {
-  try {
-    const data = await Cowrie.find().limit(5);
-    console.log("Fetched cowrie data:", data);
-    res.json(data);
-  } catch (error) {
-    console.error("Error fetching cowrie data:", error);
-    res.status(500).json({ message: "Error fetching data", error });
-  }
-});
+// app.get("/api/cowrie-data", async (req, res) => {
+//   try {
+//     const data = await Cowrie.find().limit(5);
+//     console.log("Fetched cowrie data:", data);
+//     res.json(data);
+//   } catch (error) {
+//     console.error("Error fetching cowrie data:", error);
+//     res.status(500).json({ message: "Error fetching data", error });
+//   }
+// });
 
 // Test API route
 app.get("/", (req, res) => {
