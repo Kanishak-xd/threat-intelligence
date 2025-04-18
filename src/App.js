@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import Apintel from "./apintel";
 
 function App() {
   const [paragraph, setParagraph] = useState("");
-  const [heading, setHeading] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:3001/api/paragraph")
       .then((res) => res.json())
       .then((data) => setParagraph(data.paragraph))
       .catch((err) => console.error("Error fetching paragraph:", err));
-
-    fetch("http://localhost:3001/api/heading")
-      .then((res) => res.json())
-      .then((data) => setHeading(data.heading))
-      .catch((err) => console.error("Error fetching heading", err));
   }, []);
+
   return (
-    <div>
-      <h1>Threat Intelligence Dashboard</h1>
-      <h2>Heading from React.js Frontend</h2>
-      <h3>{heading}</h3>
-      <p>{paragraph}</p>
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/home">Home</Link>
+            </li>
+            <li>
+              <Link to="/apintel">OTX Intelligence</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/home" element={
+            <div>
+              <h1>Threat Intelligence Dashboard</h1>
+              <p>{paragraph}</p>
+            </div>
+          } />
+          <Route path="/apintel" element={<Apintel />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
