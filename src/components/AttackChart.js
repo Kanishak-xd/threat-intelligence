@@ -10,11 +10,13 @@ const AttackChart = () => {
   const [attackData, setAttackData] = useState([]);
   const [ipData, setIpData] = useState([]);
   const [credentialsData, setCredentialsData] = useState([]);
+  const [rawLogs, setRawLogs] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:3001/api/logs')
       .then(response => response.json())
       .then(data => {
+        setRawLogs(data); // Store raw logs for download
         // Process data for bar chart (attacks over time)
         const hourlyAttacks = {};
         const ipCounts = {}; // For pie chart
@@ -67,6 +69,20 @@ const AttackChart = () => {
       })
       .catch(error => console.error('Error fetching logs:', error));
   }, []);
+
+  // Function to handle download
+  const handleDownload = () => {
+    const jsonString = JSON.stringify(rawLogs, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'logs.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   // Custom tooltip component for bar chart
   const CustomTooltip = ({ active, payload, label }) => {
@@ -263,6 +279,39 @@ const AttackChart = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Download Button */}
+      <div style={{ 
+        marginTop: '40px',
+        textAlign: 'center'
+      }}>
+        <button
+          onClick={handleDownload}
+          style={{
+            padding: '12px 24px',
+            backgroundColor: '#4CAF50',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '16px',
+            fontWeight: 'bold',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+            transition: 'all 0.3s ease',
+            '&:hover': {
+              backgroundColor: '#45a049',
+              transform: 'translateY(-2px)',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
+            },
+            '&:active': {
+              transform: 'translateY(0)',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+            }
+          }}
+        >
+          Download Logs
+        </button>
       </div>
     </div>
   );
