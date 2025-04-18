@@ -9,6 +9,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'
 const AttackChart = () => {
   const [attackData, setAttackData] = useState([]);
   const [ipData, setIpData] = useState([]);
+  const [credentialsData, setCredentialsData] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:3001/api/logs')
@@ -17,6 +18,7 @@ const AttackChart = () => {
         // Process data for bar chart (attacks over time)
         const hourlyAttacks = {};
         const ipCounts = {}; // For pie chart
+        const credentialsCounts = {}; // For credentials table
         
         data.forEach(log => {
           // Process for bar chart
@@ -29,6 +31,16 @@ const AttackChart = () => {
           // Process for pie chart
           if (log.src_ip) {
             ipCounts[log.src_ip] = (ipCounts[log.src_ip] || 0) + 1;
+          }
+
+          // Process for credentials table
+          if (log.username && log.password) {
+            const key = `${log.username}:${log.password}`;
+            credentialsCounts[key] = {
+              username: log.username,
+              password: log.password,
+              count: (credentialsCounts[key]?.count || 0) + 1
+            };
           }
         });
 
@@ -44,8 +56,14 @@ const AttackChart = () => {
           .sort((a, b) => b.value - a.value)
           .slice(0, 8);
 
+        // Convert to array format for credentials table (top 10)
+        const credentialsArray = Object.values(credentialsCounts)
+          .sort((a, b) => b.count - a.count)
+          .slice(0, 10);
+
         setAttackData(chartData);
         setIpData(pieData);
+        setCredentialsData(credentialsArray);
       })
       .catch(error => console.error('Error fetching logs:', error));
   }, []);
@@ -153,7 +171,7 @@ const AttackChart = () => {
       </div>
 
       {/* Pie Chart */}
-      <div>
+      <div style={{ marginBottom: '40px' }}>
         <h3 style={{ textAlign: 'center', color: '#444', marginBottom: '15px' }}>
           Top Attacking IPs
         </h3>
@@ -177,6 +195,74 @@ const AttackChart = () => {
             <RechartsLegend />
           </PieChart>
         </ResponsiveContainer>
+      </div>
+
+      {/* Credentials Table */}
+      <div>
+        <h3 style={{ textAlign: 'center', color: '#444', marginBottom: '15px' }}>
+          Common Username/Password Combinations
+        </h3>
+        <div style={{ 
+          overflowX: 'auto',
+          borderRadius: '8px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        }}>
+          <table style={{ 
+            width: '100%',
+            borderCollapse: 'collapse',
+            backgroundColor: '#fff'
+          }}>
+            <thead>
+              <tr style={{ 
+                backgroundColor: '#f8f9fa',
+                borderBottom: '2px solid #dee2e6'
+              }}>
+                <th style={{ 
+                  padding: '12px 15px',
+                  textAlign: 'left',
+                  color: '#495057',
+                  fontWeight: 'bold'
+                }}>Username</th>
+                <th style={{ 
+                  padding: '12px 15px',
+                  textAlign: 'left',
+                  color: '#495057',
+                  fontWeight: 'bold'
+                }}>Password</th>
+                <th style={{ 
+                  padding: '12px 15px',
+                  textAlign: 'left',
+                  color: '#495057',
+                  fontWeight: 'bold'
+                }}>Attempts</th>
+              </tr>
+            </thead>
+            <tbody>
+              {credentialsData.map((cred, index) => (
+                <tr key={index} style={{ 
+                  borderBottom: '1px solid #dee2e6',
+                  '&:hover': {
+                    backgroundColor: '#f8f9fa'
+                  }
+                }}>
+                  <td style={{ 
+                    padding: '12px 15px',
+                    color: '#212529'
+                  }}>{cred.username}</td>
+                  <td style={{ 
+                    padding: '12px 15px',
+                    color: '#212529'
+                  }}>{cred.password}</td>
+                  <td style={{ 
+                    padding: '12px 15px',
+                    color: '#212529',
+                    fontWeight: 'bold'
+                  }}>{cred.count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
