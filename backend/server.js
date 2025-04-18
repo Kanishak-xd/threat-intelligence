@@ -2,11 +2,25 @@
 const express = require("express");
 const cors = require("cors"); // enable CORS so frontend can fetch
 const fetch = require("node-fetch");
+const fs = require("fs");
+const path = require("path");
 const app = express();
 const PORT = 3001;
 const OTX_API_KEY = "0e69f8728e0b29218b8b2b93bc489aab6498a3760a3dc75e4b0003f808b419fc";
 const OTX_PULSE_ID = "6341d1aa0a02a3f6251ab540";
 app.use(cors());
+
+// Serve logs data
+app.get("/api/logs", (req, res) => {
+  try {
+    const logsPath = path.join(__dirname, "logs.json");
+    const logsData = JSON.parse(fs.readFileSync(logsPath, "utf8"));
+    res.json(logsData);
+  } catch (error) {
+    console.error("Error reading logs file:", error);
+    res.status(500).json({ error: "Failed to read logs data" });
+  }
+});
 
 app.get("/api/heading", async (req, res) => {
   try {

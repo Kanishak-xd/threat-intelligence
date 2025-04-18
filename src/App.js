@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Apintel from "./apintel";
+import AttackChart from "./components/AttackChart";
 
 function App() {
   const [paragraph, setParagraph] = useState("");
@@ -31,6 +32,7 @@ function App() {
           <Route path="/home" element={
             <div>
               <h1>Threat Intelligence Dashboard</h1>
+              <AttackChart />
               <p>{paragraph}</p>
             </div>
           } />
