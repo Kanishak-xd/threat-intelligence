@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
 import Apintel from "./apintel";
 import AttackChart from "./components/AttackChart";
+import "./App.css";
 
 function App() {
   const [paragraph, setParagraph] = useState("");
@@ -15,14 +16,14 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/home">Home</Link>
+      <div className="App">
+        <nav className="nav-container">
+          <ul className="nav-list">
+            <li className="nav-item">
+              <Link to="/home" className="nav-link">Home</Link>
             </li>
-            <li>
-              <Link to="/apintel">OTX Intelligence</Link>
+            <li className="nav-item">
+              <Link to="/apintel" className="nav-link">OTX Intelligence</Link>
             </li>
           </ul>
         </nav>
@@ -30,10 +31,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={
-            <div>
-              <h1>Threat Intelligence Dashboard</h1>
+            <div className="home-container">
+              <h1 className="home-title">Threat Intelligence Dashboard</h1>
               <AttackChart />
-              <p>{paragraph}</p>
+              <p className="home-paragraph">{paragraph}</p>
             </div>
           } />
           <Route path="/apintel" element={<Apintel />} />

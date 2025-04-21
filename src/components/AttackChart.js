@@ -3,6 +3,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, Legend as RechartsLegend 
 } from 'recharts';
+import './AttackChart.css';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1'];
 
@@ -88,17 +89,9 @@ const AttackChart = () => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="custom-tooltip" style={{
-          backgroundColor: '#fff',
-          padding: '10px',
-          border: '1px solid #ccc',
-          borderRadius: '5px',
-          boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-        }}>
-          <p style={{ margin: 0, color: '#666' }}>{label}</p>
-          <p style={{ margin: '5px 0', color: '#8884d8', fontWeight: 'bold' }}>
-            Attacks: {payload[0].value}
-          </p>
+        <div className="custom-tooltip">
+          <p className="tooltip-label">{label}</p>
+          <p className="tooltip-value">Attacks: {payload[0].value}</p>
         </div>
       );
     }
@@ -109,17 +102,9 @@ const AttackChart = () => {
   const CustomPieTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
-        <div className="custom-tooltip" style={{
-          backgroundColor: '#fff',
-          padding: '10px',
-          border: '1px solid #ccc',
-          borderRadius: '5px',
-          boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-        }}>
-          <p style={{ margin: 0, color: '#666' }}>IP: {payload[0].name}</p>
-          <p style={{ margin: '5px 0', color: payload[0].color, fontWeight: 'bold' }}>
-            Attacks: {payload[0].value}
-          </p>
+        <div className="custom-tooltip">
+          <p className="tooltip-label">IP: {payload[0].name}</p>
+          <p className="tooltip-value">Attacks: {payload[0].value}</p>
         </div>
       );
     }
@@ -127,25 +112,12 @@ const AttackChart = () => {
   };
 
   return (
-    <div style={{ 
-      width: '100%', 
-      padding: '20px',
-      backgroundColor: '#fff',
-      borderRadius: '10px',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
-    }}>
-      <h2 style={{
-        textAlign: 'center',
-        color: '#333',
-        marginBottom: '20px',
-        fontSize: '1.5em'
-      }}>Attack Analysis Dashboard</h2>
+    <div className="dashboard-container">
+      <h2 className="dashboard-title">Attack Analysis Dashboard</h2>
 
       {/* Bar Chart */}
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ textAlign: 'center', color: '#444', marginBottom: '15px' }}>
-          Number of Attacks Over Time
-        </h3>
+      <div>
+        <h3 className="chart-title">Number of Attacks Over Time</h3>
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
             data={attackData}
@@ -187,10 +159,8 @@ const AttackChart = () => {
       </div>
 
       {/* Pie Chart */}
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ textAlign: 'center', color: '#444', marginBottom: '15px' }}>
-          Top Attacking IPs
-        </h3>
+      <div>
+        <h3 className="chart-title">Top Attacking IPs</h3>
         <ResponsiveContainer width="100%" height={400}>
           <PieChart>
             <Pie
@@ -215,65 +185,22 @@ const AttackChart = () => {
 
       {/* Credentials Table */}
       <div>
-        <h3 style={{ textAlign: 'center', color: '#444', marginBottom: '15px' }}>
-          Common Username/Password Combinations
-        </h3>
-        <div style={{ 
-          overflowX: 'auto',
-          borderRadius: '8px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        }}>
-          <table style={{ 
-            width: '100%',
-            borderCollapse: 'collapse',
-            backgroundColor: '#fff'
-          }}>
+        <h3 className="chart-title">Common Username/Password Combinations</h3>
+        <div className="credentials-table-container">
+          <table className="credentials-table">
             <thead>
-              <tr style={{ 
-                backgroundColor: '#f8f9fa',
-                borderBottom: '2px solid #dee2e6'
-              }}>
-                <th style={{ 
-                  padding: '12px 15px',
-                  textAlign: 'left',
-                  color: '#495057',
-                  fontWeight: 'bold'
-                }}>Username</th>
-                <th style={{ 
-                  padding: '12px 15px',
-                  textAlign: 'left',
-                  color: '#495057',
-                  fontWeight: 'bold'
-                }}>Password</th>
-                <th style={{ 
-                  padding: '12px 15px',
-                  textAlign: 'left',
-                  color: '#495057',
-                  fontWeight: 'bold'
-                }}>Attempts</th>
+              <tr className="table-header">
+                <th className="table-header-cell">Username</th>
+                <th className="table-header-cell">Password</th>
+                <th className="table-header-cell">Attempts</th>
               </tr>
             </thead>
             <tbody>
               {credentialsData.map((cred, index) => (
-                <tr key={index} style={{ 
-                  borderBottom: '1px solid #dee2e6',
-                  '&:hover': {
-                    backgroundColor: '#f8f9fa'
-                  }
-                }}>
-                  <td style={{ 
-                    padding: '12px 15px',
-                    color: '#212529'
-                  }}>{cred.username}</td>
-                  <td style={{ 
-                    padding: '12px 15px',
-                    color: '#212529'
-                  }}>{cred.password}</td>
-                  <td style={{ 
-                    padding: '12px 15px',
-                    color: '#212529',
-                    fontWeight: 'bold'
-                  }}>{cred.count}</td>
+                <tr key={index} className="table-row">
+                  <td className="table-cell">{cred.username}</td>
+                  <td className="table-cell">{cred.password}</td>
+                  <td className="table-cell">{cred.count}</td>
                 </tr>
               ))}
             </tbody>
@@ -282,33 +209,10 @@ const AttackChart = () => {
       </div>
 
       {/* Download Button */}
-      <div style={{ 
-        marginTop: '40px',
-        textAlign: 'center'
-      }}>
+      <div className="download-button-container">
         <button
           onClick={handleDownload}
-          style={{
-            padding: '12px 24px',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: 'bold',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-            transition: 'all 0.3s ease',
-            '&:hover': {
-              backgroundColor: '#45a049',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-            },
-            '&:active': {
-              transform: 'translateY(0)',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-            }
-          }}
+          className="download-button"
         >
           Download Logs
         </button>

@@ -1,0 +1,117 @@
+.dashboard-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.section-title {
+    color: #444;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 10px;
+}
+
+.section-content {
+    color: #666;
+}
+
+.error-message {
+    color: red;
+}
+
+.table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+.table-header {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.table-header-cell {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.table-row {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.table-cell {
+    padding: 12px 15px;
+}
+
+.high-risk {
+    color: #dc3545;
+}
+
+.medium-risk {
+    color: #ffc107;
+}
+
+.low-risk {
+    color: #28a745;
+}
+
+.search-section {
+    margin-bottom: 20px;
+}
+
+.search-title {
+    margin-bottom: 10px;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    padding: 10px;
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.search-result {
+    background-color: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.search-result p {
+    margin: 5px 0;
+}
