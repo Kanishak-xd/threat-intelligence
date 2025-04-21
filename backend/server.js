@@ -7,7 +7,8 @@ const path = require("path");
 const dotenv = require("dotenv");
 const app = express();
 const PORT = 3001;
-const OTX_API_KEY = "0e69f8728e0b29218b8b2b93bc489aab6498a3760a3dc75e4b0003f808b419fc";
+const OTX_API_KEY =
+  "0e69f8728e0b29218b8b2b93bc489aab6498a3760a3dc75e4b0003f808b419fc";
 const OTX_PULSE_ID = "6341d1aa0a02a3f6251ab540";
 
 // Load environment variables
@@ -30,11 +31,11 @@ app.get("/api/logs", (req, res) => {
 // AbuseIPDB endpoint
 app.get("/api/abuseipdb", async (req, res) => {
   try {
-    const response = await fetch('https://api.abuseipdb.com/api/v2/blacklist', {
+    const response = await fetch("https://api.abuseipdb.com/api/v2/blacklist", {
       headers: {
-        'Key': process.env.ABUSEIPDB_API_KEY,
-        'Accept': 'application/json'
-      }
+        Key: process.env.ABUSEIPDB_API_KEY,
+        Accept: "application/json",
+      },
     });
 
     if (!response.ok) {
@@ -51,16 +52,19 @@ app.get("/api/abuseipdb", async (req, res) => {
 
 app.get("/api/heading", async (req, res) => {
   try {
-    const response = await fetch(`https://otx.alienvault.com/api/v1/pulses/${OTX_PULSE_ID}`, {
-      headers: {
-        "X-OTX-API-KEY": OTX_API_KEY,
-      },
-    });
+    const response = await fetch(
+      `https://otx.alienvault.com/api/v1/pulses/${OTX_PULSE_ID}`,
+      {
+        headers: {
+          "X-OTX-API-KEY": OTX_API_KEY,
+        },
+      }
+    );
 
     const data = await response.json();
     const domains = data.indicators
-      .filter(indicator => indicator.type === "domain")
-      .map(indicator => indicator.indicator);
+      .filter((indicator) => indicator.type === "domain")
+      .map((indicator) => indicator.indicator);
 
     // Just grab first 5 domains for display
     const displayedDomains = domains.slice(0, 5).join(", ");
@@ -70,6 +74,34 @@ app.get("/api/heading", async (req, res) => {
   } catch (error) {
     console.error("Error fetching from OTX API:", error);
     res.status(500).json({ heading: "Failed to fetch phishing domains." });
+  }
+});
+
+// Search for specific IP on AbuseIPDB
+app.get("/api/abuseipdb/search", async (req, res) => {
+  const ip = req.query.ip;
+  if (!ip) return res.status(400).json({ error: "Missing IP address" });
+
+  try {
+    const response = await fetch(
+      `https://api.abuseipdb.com/api/v2/check?ipAddress=${ip}`,
+      {
+        headers: {
+          Key: process.env.ABUSEIPDB_API_KEY,
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`AbuseIPDB API error: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("Error fetching IP report from AbuseIPDB:", error);
+    res.status(500).json({ error: "Failed to fetch IP report" });
   }
 });
 
