@@ -7,9 +7,8 @@ const path = require("path");
 const dotenv = require("dotenv");
 const app = express();
 const PORT = 3001;
-const OTX_API_KEY =
-  "0e69f8728e0b29218b8b2b93bc489aab6498a3760a3dc75e4b0003f808b419fc";
-const OTX_PULSE_ID = "6341d1aa0a02a3f6251ab540";
+const OTX_API_KEY = process.env.OTX_API_KEY;
+const OTX_PULSE_ID = process.env.OTX_PULSE_ID;
 
 // Load environment variables
 dotenv.config();

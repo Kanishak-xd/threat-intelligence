@@ -23,7 +23,7 @@ function App() {
               <Link to="/home" className="nav-link">Home</Link>
             </li>
             <li className="nav-item">
-              <Link to="/apintel" className="nav-link">OTX Intelligence</Link>
+              <Link to="/apintel" className="nav-link">Threat Intelligence</Link>
             </li>
           </ul>
         </nav>
