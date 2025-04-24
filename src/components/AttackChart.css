@@ -1,26 +1,26 @@
 .dashboard-container {
     width: 100%;
     padding: 20px;
-    background-color: #fff;
+    background-color: #1E1E1E;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .dashboard-title {
     text-align: center;
-    color: #333;
+    color: #fff;
     margin-bottom: 20px;
     font-size: 1.5em;
 }
 
 .chart-title {
     text-align: center;
-    color: #444;
+    color: #fff;
     margin-bottom: 15px;
 }
 
 .custom-tooltip {
-    background-color: #fff;
+    background-color: #1E1E1E;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -29,7 +29,7 @@
 
 .tooltip-label {
     margin: 0;
-    color: #666;
+    color: #fff;
 }
 
 .tooltip-value {
@@ -47,18 +47,18 @@
 .credentials-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
+    background-color: #1E1E1E;
 }
 
 .table-header {
-    background-color: #f8f9fa;
+    background-color: #1E1E1E;
     border-bottom: 2px solid #dee2e6;
 }
 
 .table-header-cell {
     padding: 12px 15px;
     text-align: left;
-    color: #495057;
+    color: #fff;
     font-weight: bold;
 }
 
@@ -68,11 +68,12 @@
 
 .table-row:hover {
     background-color: #f8f9fa;
+    color: #1E1E1E;
 }
 
 .table-cell {
     padding: 12px 15px;
-    color: #212529;
+    color: #fff;
 }
 
 .download-button-container {
@@ -97,6 +98,7 @@
     background-color: #45a049;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #1E1E1E;
 }
 
 .download-button:active {
