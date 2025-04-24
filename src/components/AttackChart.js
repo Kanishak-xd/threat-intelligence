@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, Legend as RechartsLegend 
 } from 'recharts';
 import './AttackChart.css';
@@ -115,11 +115,11 @@ const AttackChart = () => {
     <div className="dashboard-container">
       <h2 className="dashboard-title">Attack Analysis Dashboard</h2>
 
-      {/* Bar Chart */}
+      {/* Line Chart */}
       <div>
         <h3 className="chart-title">Number of Attacks Over Time</h3>
         <ResponsiveContainer width="100%" height={400}>
-          <BarChart
+          <LineChart
             data={attackData}
             margin={{
               top: 20,
@@ -148,13 +148,16 @@ const AttackChart = () => {
               axisLine={{ stroke: '#ccc' }}
             />
             <Tooltip content={<CustomTooltip />} />
-            <Bar 
+            <Line 
+              type="monotone"
               dataKey="attacks" 
-              fill="#8884d8"
-              radius={[4, 4, 0, 0]}
+              stroke="#8884d8"
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 8 }}
               animationDuration={1500}
             />
-          </BarChart>
+          </LineChart>
         </ResponsiveContainer>
       </div>
 
