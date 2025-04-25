@@ -195,9 +195,7 @@ const AttackChart = () => {
                 data={ipData}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={100}
-                paddingAngle={2}
+                outerRadius={150}
                 dataKey="value"
               >
                 {ipData.map((entry, index) => (
