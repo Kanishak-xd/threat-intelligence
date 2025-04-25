@@ -31,7 +31,7 @@
 
 .stat-card {
     flex: 1;
-    background-color: #222222;
+    background-color: #1A1A1A ;
     padding: 20px;
     border-radius: 25px;
     min-height: 80px;
@@ -57,14 +57,14 @@
 }
 
 .pie-chart-section {
-    background-color: #222222;
+    background-color: #1A1A1A  ;
     padding: 20px;
     border-radius: 25px;
     height: 400px;
 }
 
 .credentials-section {
-    background-color: #222222;
+    background-color: #1A1A1A  ;
     padding: 20px;
     border-radius: 25px;
     height: 400px;
@@ -146,7 +146,7 @@
 .download-button {
     margin-top: auto;
     padding: 12px 24px;
-    background-color: #222222;
+    background-color: #1A1A1A ;
     border: 1px solid #333;
     border-radius: 25px;
     cursor: pointer;
