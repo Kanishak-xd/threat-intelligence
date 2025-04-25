@@ -155,7 +155,7 @@ const AttackChart = () => {
             <Line 
               type="monotone" 
               dataKey="attacks" 
-              stroke="#8884d8" 
+              stroke="#321FD2" 
               dot={false}
               strokeWidth={2}
             />
@@ -203,7 +203,6 @@ const AttackChart = () => {
                 ))}
               </Pie>
               <Tooltip />
-              <Legend />
             </PieChart>
           </ResponsiveContainer>
         </div>
