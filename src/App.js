@@ -40,7 +40,7 @@ function App() {
             <>
               <HeroSection onExploreClick={scrollToDashboard} />
               <div ref={dashboardRef} className="home-container">
-                <h1 className="home-title">Threat Intelligence Dashboard</h1>
+                <h1 className="home-title">Threat Intelligence Dashboard</h1>   
                 <AttackChart />
                 <p className="home-paragraph">{paragraph}</p>
               </div>
