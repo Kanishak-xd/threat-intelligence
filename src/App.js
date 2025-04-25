@@ -1,12 +1,29 @@
 import React, { useEffect, useState, useRef } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import Apintel from "./apintel";
 import AttackChart from "./components/AttackChart";
 import HeroSection from "./components/HeroSection";
 import "./App.css";
 
+function NavLink({ to, children, onClick, isDashboardActive }) {
+  const location = useLocation();
+  const isActive = (location.pathname === to && !isDashboardActive) || 
+    (to === '/home#dashboard' && isDashboardActive);
+  
+  return (
+    <Link 
+      to={to} 
+      className={`nav-link ${isActive ? 'active' : ''}`}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  );
+}
+
 function App() {
   const [paragraph, setParagraph] = useState("");
+  const [isDashboardActive, setIsDashboardActive] = useState(false);
   const dashboardRef = useRef(null);
 
   useEffect(() => {
@@ -14,6 +31,16 @@ function App() {
       .then((res) => res.json())
       .then((data) => setParagraph(data.paragraph))
       .catch((err) => console.error("Error fetching paragraph:", err));
+
+    const handleScroll = () => {
+      if (dashboardRef.current) {
+        const rect = dashboardRef.current.getBoundingClientRect();
+        setIsDashboardActive(rect.top <= 100);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollToDashboard = () => {
@@ -26,10 +53,13 @@ function App() {
         <nav className="nav-container">
           <ul className="nav-list">
             <li className="nav-item">
-              <Link to="/home" className="nav-link">Home</Link>
+              <NavLink to="/home" isDashboardActive={isDashboardActive}>Home</NavLink>
             </li>
             <li className="nav-item">
-              <Link to="/apintel" className="nav-link">Threat Intelligence</Link>
+              <NavLink to="/home#dashboard" onClick={scrollToDashboard} isDashboardActive={isDashboardActive}>Dashboard</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/apintel" isDashboardActive={isDashboardActive}>API</NavLink>
             </li>
           </ul>
         </nav>
