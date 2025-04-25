@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, Legend 
@@ -6,17 +6,34 @@ import {
 import './AttackChart.css';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1'];
+const ITEMS_PER_PAGE = 20;
 
 const AttackChart = () => {
   const [attackData, setAttackData] = useState([]);
   const [ipData, setIpData] = useState([]);
   const [credentialsData, setCredentialsData] = useState([]);
+  const [displayedCredentials, setDisplayedCredentials] = useState([]);
   const [rawLogs, setRawLogs] = useState([]);
   const [stats, setStats] = useState({
     totalAttacks: 0,
     maxAttacksInDay: 0,
     totalRunTime: 0
   });
+  const [loading, setLoading] = useState(false);
+  const observer = useRef();
+  const lastCredentialElementRef = useCallback(node => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && displayedCredentials.length < credentialsData.length) {
+        setDisplayedCredentials(prev => [
+          ...prev,
+          ...credentialsData.slice(prev.length, prev.length + ITEMS_PER_PAGE)
+        ]);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [loading, credentialsData, displayedCredentials.length]);
 
   useEffect(() => {
     fetch('http://localhost:3001/api/logs')
@@ -91,14 +108,14 @@ const AttackChart = () => {
           .sort((a, b) => b.value - a.value)
           .slice(0, 8);
 
-        // Convert to array format for credentials table
+        // Convert to array format for credentials table (all entries)
         const credentialsArray = Object.values(credentialsCounts)
-          .sort((a, b) => b.count - a.count)
-          .slice(0, 10);
+          .sort((a, b) => b.count - a.count);
 
         setAttackData(chartData);
         setIpData(pieData);
         setCredentialsData(credentialsArray);
+        setDisplayedCredentials(credentialsArray.slice(0, ITEMS_PER_PAGE));
       })
       .catch(error => console.error('Error fetching logs:', error));
   }, []);
@@ -185,24 +202,30 @@ const AttackChart = () => {
       </div>
 
       <div className="credentials-section">
-        <table className="credentials-table">
-          <thead>
-            <tr className="table-header">
-              <th className="table-header-cell">Username</th>
-              <th className="table-header-cell">Password</th>
-              <th className="table-header-cell">Attempts</th>
-            </tr>
-          </thead>
-          <tbody>
-            {credentialsData.map((cred, index) => (
-              <tr key={index} className="table-row">
-                <td className="table-cell">{cred.username}</td>
-                <td className="table-cell">{cred.password}</td>
-                <td className="table-cell">{cred.count}</td>
+        <div className="credentials-table-wrapper">
+          <table className="credentials-table">
+            <thead>
+              <tr className="table-header">
+                <th className="table-header-cell">Username</th>
+                <th className="table-header-cell">Password</th>
+                <th className="table-header-cell">Attempts</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {displayedCredentials.map((cred, index) => (
+                <tr 
+                  key={index} 
+                  className="table-row"
+                  ref={index === displayedCredentials.length - 1 ? lastCredentialElementRef : null}
+                >
+                  <td className="table-cell">{cred.username}</td>
+                  <td className="table-cell">{cred.password}</td>
+                  <td className="table-cell">{cred.count}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <button onClick={handleDownload} className="download-button">
@@ -211,6 +234,7 @@ const AttackChart = () => {
           <path d="M12 2V11M12 16L7 11H17L12 16Z" stroke="currentColor" strokeWidth="2"/>
           <path d="M3 20H21" stroke="currentColor" strokeWidth="2"/>
         </svg>
+        Download Logs
       </button>
     </div>
   );

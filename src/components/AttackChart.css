@@ -7,6 +7,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    position: relative;
+    padding-bottom: 60px; /* Make space for the download button */
 }
 
 .chart-section {
@@ -54,7 +56,19 @@
     padding: 20px;
     border-radius: 8px;
     height: 400px;
+    overflow: hidden;
+    position: relative;
+}
+
+.credentials-table-wrapper {
+    height: 100%;
     overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.credentials-table-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 .dashboard-title {
@@ -120,16 +134,29 @@
 .download-button {
     position: absolute;
     bottom: 20px;
-    right: 20px;
-    padding: 8px;
-    background-color: transparent;
-    border: none;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    background-color: #242424;
+    border: 1px solid #333;
+    border-radius: 8px;
     cursor: pointer;
     color: #666;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
 }
 
 .download-button:hover {
     color: #fff;
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.download-button svg {
+    width: 20px;
+    height: 20px;
 }
 
 /* Line chart customization */
