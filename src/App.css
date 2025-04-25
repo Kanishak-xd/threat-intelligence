@@ -76,16 +76,7 @@
 }
 
 .nav-link:hover {
-<<<<<<< HEAD
-  background-color: #333333;
-  color: #FEFEFE;
-}
-
-.nav-link.active {
-  background-color: #FEFEFE;
-=======
   background-color: #e9ecef;
->>>>>>> 327a20deb379b6356533aa9eeff6cd0b1dd0d016
   color: #000000;
 }
 
