@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
-  PieChart, Pie, Cell, Legend as RechartsLegend 
+  PieChart, Pie, Cell, Legend 
 } from 'recharts';
 import './AttackChart.css';
 
@@ -12,24 +12,37 @@ const AttackChart = () => {
   const [ipData, setIpData] = useState([]);
   const [credentialsData, setCredentialsData] = useState([]);
   const [rawLogs, setRawLogs] = useState([]);
+  const [stats, setStats] = useState({
+    totalAttacks: 0,
+    maxAttacksInDay: 0,
+    totalRunTime: 0
+  });
 
   useEffect(() => {
     fetch('http://localhost:3001/api/logs')
       .then(response => response.json())
       .then(data => {
-        setRawLogs(data); // Store raw logs for download
-        // Process data for bar chart (attacks over time)
+        setRawLogs(data);
+        
+        // Process data for line chart (attacks over time)
         const hourlyAttacks = {};
-        const ipCounts = {}; // For pie chart
-        const credentialsCounts = {}; // For credentials table
+        const ipCounts = {};
+        const credentialsCounts = {};
+        let maxAttacksInDay = 0;
+        let firstTimestamp = Infinity;
+        let lastTimestamp = -Infinity;
         
         data.forEach(log => {
-          // Process for bar chart
+          // Process for line chart
           const timestamp = new Date(log.timestamp);
           const hour = timestamp.getHours();
           const date = timestamp.toLocaleDateString();
           const key = `${date} ${hour}:00`;
           hourlyAttacks[key] = (hourlyAttacks[key] || 0) + 1;
+
+          // Track timestamps for runtime calculation
+          firstTimestamp = Math.min(firstTimestamp, timestamp.getTime());
+          lastTimestamp = Math.max(lastTimestamp, timestamp.getTime());
 
           // Process for pie chart
           if (log.src_ip) {
@@ -45,13 +58,32 @@ const AttackChart = () => {
               count: (credentialsCounts[key]?.count || 0) + 1
             };
           }
+
+          // Calculate max attacks in a day
+          const dayKey = timestamp.toLocaleDateString();
+          const dayAttacks = Object.entries(hourlyAttacks)
+            .filter(([time]) => time.startsWith(dayKey))
+            .reduce((sum, [, count]) => sum + count, 0);
+          maxAttacksInDay = Math.max(maxAttacksInDay, dayAttacks);
         });
 
-        // Convert to array format for bar chart
-        const chartData = Object.entries(hourlyAttacks).map(([time, count]) => ({
-          time,
-          attacks: count
-        }));
+        // Calculate total runtime in hours
+        const totalRunTime = Math.round((lastTimestamp - firstTimestamp) / (1000 * 60 * 60));
+
+        // Update stats
+        setStats({
+          totalAttacks: data.length,
+          maxAttacksInDay,
+          totalRunTime
+        });
+
+        // Convert to array format for line chart
+        const chartData = Object.entries(hourlyAttacks)
+          .map(([time, count]) => ({
+            time,
+            attacks: count
+          }))
+          .sort((a, b) => new Date(a.time) - new Date(b.time));
 
         // Convert to array format for pie chart (top 8 IPs)
         const pieData = Object.entries(ipCounts)
@@ -59,7 +91,7 @@ const AttackChart = () => {
           .sort((a, b) => b.value - a.value)
           .slice(0, 8);
 
-        // Convert to array format for credentials table (top 10)
+        // Convert to array format for credentials table
         const credentialsArray = Object.values(credentialsCounts)
           .sort((a, b) => b.count - a.count)
           .slice(0, 10);
@@ -71,7 +103,6 @@ const AttackChart = () => {
       .catch(error => console.error('Error fetching logs:', error));
   }, []);
 
-  // Function to handle download
   const handleDownload = () => {
     const jsonString = JSON.stringify(rawLogs, null, 2);
     const blob = new Blob([jsonString], { type: 'application/json' });
@@ -85,141 +116,102 @@ const AttackChart = () => {
     URL.revokeObjectURL(url);
   };
 
-  // Custom tooltip component for bar chart
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="custom-tooltip">
-          <p className="tooltip-label">{label}</p>
-          <p className="tooltip-value">Attacks: {payload[0].value}</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
-  // Custom tooltip for pie chart
-  const CustomPieTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="custom-tooltip">
-          <p className="tooltip-label">IP: {payload[0].name}</p>
-          <p className="tooltip-value">Attacks: {payload[0].value}</p>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <div className="dashboard-container">
-      <h2 className="dashboard-title">Attack Analysis Dashboard</h2>
+      <div className="stats-section">
+        <div className="stat-card">
+          <div className="stat-title">Total Attacks</div>
+          <div className="stat-value">{stats.totalAttacks.toLocaleString()}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-title">Most Attacks in a Day</div>
+          <div className="stat-value">{stats.maxAttacksInDay.toLocaleString()}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-title">Total Run Time</div>
+          <div className="stat-value">{stats.totalRunTime}h</div>
+        </div>
+      </div>
 
-      {/* Line Chart */}
-      <div>
-        <h3 className="chart-title">Number of Attacks Over Time</h3>
-        <ResponsiveContainer width="100%" height={400}>
+      <div className="chart-section">
+        <h3 className="chart-title">Attacks Over Time</h3>
+        <ResponsiveContainer width="100%" height={300}>
           <LineChart
             data={attackData}
-            margin={{
-              top: 20,
-              right: 30,
-              left: 20,
-              bottom: 60,
-            }}
+            margin={{ top: 10, right: 30, left: 10, bottom: 30 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+            <CartesianGrid strokeDasharray="3 3" />
             <XAxis 
               dataKey="time" 
               angle={-45}
               textAnchor="end"
               height={60}
-              tick={{ fill: '#666' }}
-              axisLine={{ stroke: '#ccc' }}
+              interval={Math.floor(attackData.length / 10)}
             />
-            <YAxis 
-              label={{ 
-                value: 'Number of Attacks', 
-                angle: -90, 
-                position: 'insideLeft',
-                style: { fill: '#666' }
-              }}
-              tick={{ fill: '#666' }}
-              axisLine={{ stroke: '#ccc' }}
-            />
-            <Tooltip content={<CustomTooltip />} />
+            <YAxis />
+            <Tooltip />
             <Line 
-              type="monotone"
+              type="monotone" 
               dataKey="attacks" 
-              stroke="#8884d8"
-              strokeWidth={2}
+              stroke="#8884d8" 
               dot={false}
-              activeDot={{ r: 8 }}
-              animationDuration={1500}
+              strokeWidth={2}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Pie Chart */}
-      <div>
+      <div className="pie-chart-section">
         <h3 className="chart-title">Top Attacking IPs</h3>
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={350}>
           <PieChart>
             <Pie
               data={ipData}
               cx="50%"
               cy="50%"
-              labelLine={false}
-              outerRadius={150}
-              fill="#8884d8"
+              innerRadius={60}
+              outerRadius={100}
+              paddingAngle={2}
               dataKey="value"
-              label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
             >
               {ipData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-            <Tooltip content={<CustomPieTooltip />} />
-            <RechartsLegend />
+            <Tooltip />
+            <Legend />
           </PieChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Credentials Table */}
-      <div>
-        <h3 className="chart-title">Common Username/Password Combinations</h3>
-        <div className="credentials-table-container">
-          <table className="credentials-table">
-            <thead>
-              <tr className="table-header">
-                <th className="table-header-cell">Username</th>
-                <th className="table-header-cell">Password</th>
-                <th className="table-header-cell">Attempts</th>
+      <div className="credentials-section">
+        <table className="credentials-table">
+          <thead>
+            <tr className="table-header">
+              <th className="table-header-cell">Username</th>
+              <th className="table-header-cell">Password</th>
+              <th className="table-header-cell">Attempts</th>
+            </tr>
+          </thead>
+          <tbody>
+            {credentialsData.map((cred, index) => (
+              <tr key={index} className="table-row">
+                <td className="table-cell">{cred.username}</td>
+                <td className="table-cell">{cred.password}</td>
+                <td className="table-cell">{cred.count}</td>
               </tr>
-            </thead>
-            <tbody>
-              {credentialsData.map((cred, index) => (
-                <tr key={index} className="table-row">
-                  <td className="table-cell">{cred.username}</td>
-                  <td className="table-cell">{cred.password}</td>
-                  <td className="table-cell">{cred.count}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
 
-      {/* Download Button */}
-      <div className="download-button-container">
-        <button
-          onClick={handleDownload}
-          className="download-button"
-        >
-          Download Logs
-        </button>
-      </div>
+      <button onClick={handleDownload} className="download-button">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 16L7 11H17L12 16Z" fill="currentColor"/>
+          <path d="M12 2V11M12 16L7 11H17L12 16Z" stroke="currentColor" strokeWidth="2"/>
+          <path d="M3 20H21" stroke="currentColor" strokeWidth="2"/>
+        </svg>
+      </button>
     </div>
   );
 };

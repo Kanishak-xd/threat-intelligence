@@ -2,106 +2,155 @@
     width: 100%;
     padding: 20px;
     background-color: #1E1E1E;
+    color: #FFFFFF;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.chart-section {
+    grid-column: 1 / -1;
+    background-color: #242424;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.stats-section {
+    display: flex;
+    grid-column: 1 / -1;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    background-color: #242424;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.stat-title {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    color: #fff;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.pie-chart-section {
+    background-color: #242424;
+    padding: 20px;
+    border-radius: 8px;
+    height: 400px;
+}
+
+.credentials-section {
+    background-color: #242424;
+    padding: 20px;
+    border-radius: 8px;
+    height: 400px;
+    overflow-y: auto;
 }
 
 .dashboard-title {
-    text-align: center;
+    text-align: left;
     color: #ffffff;
     margin-bottom: 20px;
     font-size: 1.5em;
+    grid-column: 1 / -1;
 }
 
 .chart-title {
-    text-align: center;
-    color: #fff;
+    text-align: left;
+    color: #666;
     margin-bottom: 15px;
+    font-size: 1em;
 }
 
 .custom-tooltip {
-    background-color: #1E1E1E;
+    background-color: #242424;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #333;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .tooltip-label {
     margin: 0;
-    color: #fff;
+    color: #666;
 }
 
 .tooltip-value {
     margin: 5px 0;
-    color: #8884d8;
+    color: #fff;
     font-weight: bold;
-}
-
-.credentials-table-container {
-    overflow-x: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .credentials-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #1E1E1E;
 }
 
 .table-header {
-    background-color: #1E1E1E;
-    border-bottom: 2px solid #dee2e6;
+    background-color: transparent;
 }
 
 .table-header-cell {
     padding: 12px 15px;
     text-align: left;
-    color: #fff;
-    font-weight: bold;
+    color: #666;
+    font-weight: normal;
+    border: none;
 }
 
 .table-row {
-    border-bottom: 1px solid #dee2e6;
-}
-
-.table-row:hover {
-    background-color: #f8f9fa;
-    color: #1E1E1E;
+    border: none;
 }
 
 .table-cell {
     padding: 12px 15px;
     color: #fff;
-}
-
-.download-button-container {
-    margin-top: 40px;
-    text-align: center;
+    border: none;
 }
 
 .download-button {
-    padding: 12px 24px;
-    background-color: #4CAF50;
-    color: white;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 8px;
+    background-color: transparent;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    color: #666;
 }
 
 .download-button:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: #1E1E1E;
+    color: #fff;
 }
 
-.download-button:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+/* Line chart customization */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+    stroke: #333;
+}
+
+.recharts-text {
+    fill: #666;
+}
+
+.recharts-line {
+    stroke: #8884d8;
+}
+
+/* Pie chart customization */
+.recharts-pie {
+    opacity: 0.9;
+}
+
+.recharts-legend-item-text {
+    color: #666 !important;
 }
