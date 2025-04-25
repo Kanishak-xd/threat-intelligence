@@ -122,12 +122,15 @@
 }
 
 .table-header {
-    background-color: transparent;
+    background-color: #1A1A1A;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .table-header-cell {
     padding: 12px 15px;
-    text-align: left;
+    text-align: center;
     color: #666;
     font-weight: normal;
     border: none;
