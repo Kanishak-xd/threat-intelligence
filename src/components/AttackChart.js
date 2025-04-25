@@ -194,8 +194,8 @@ const AttackChart = () => {
               <Pie
                 data={ipData}
                 cx="50%"
-                cy="50%"
-                outerRadius={150}
+                cy="40%"
+                outerRadius={130}
                 dataKey="value"
               >
                 {ipData.map((entry, index) => (
