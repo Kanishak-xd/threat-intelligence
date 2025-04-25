@@ -18,7 +18,7 @@ app.use(cors());
 // Serve logs data
 app.get("/api/logs", (req, res) => {
   try {
-    const logsPath = path.join(__dirname, "logs.json");
+    const logsPath = path.join(__dirname, "processed_logs.json");
     const logsData = JSON.parse(fs.readFileSync(logsPath, "utf8"));
     res.json(logsData);
   } catch (error) {
