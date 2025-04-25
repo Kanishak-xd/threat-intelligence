@@ -1,7 +1,7 @@
 .dashboard-container {
     width: 100%;
     padding: 20px;
-    background-color: #1E1E1E;
+    background-color: #000000;
     color: #FFFFFF;
     border-radius: 10px;
     display: grid;
@@ -31,7 +31,7 @@
 
 .stat-card {
     flex: 1;
-    background-color: #242424;
+    background-color: #222222;
     padding: 20px;
     border-radius: 60px;
     min-height: 80px;
@@ -57,14 +57,14 @@
 }
 
 .pie-chart-section {
-    background-color: #242424;
+    background-color: #222222;
     padding: 20px;
     border-radius: 60px;
     height: 400px;
 }
 
 .credentials-section {
-    background-color: #242424;
+    background-color: #222222;
     padding: 20px;
     border-radius: 60px;
     height: 400px;
@@ -146,7 +146,7 @@
 .download-button {
     margin-top: auto;
     padding: 12px 24px;
-    background-color: #242424;
+    background-color: #222222;
     border: 1px solid #333;
     border-radius: 60px;
     cursor: pointer;
