@@ -176,6 +176,14 @@ const AttackChart = () => {
           <div className="stat-title">Total Run Time</div>
           <div className="stat-value">{stats.totalRunTime}h</div>
         </div>
+        <button onClick={handleDownload} className="download-button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 16L7 11H17L12 16Z" fill="currentColor"/>
+            <path d="M12 2V11M12 16L7 11H17L12 16Z" stroke="currentColor" strokeWidth="2"/>
+            <path d="M3 20H21" stroke="currentColor" strokeWidth="2"/>
+          </svg>
+          Download Logs
+        </button>
       </div>
 
       <div className="charts-container">
@@ -229,15 +237,6 @@ const AttackChart = () => {
           </div>
         </div>
       </div>
-
-      <button onClick={handleDownload} className="download-button">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 16L7 11H17L12 16Z" fill="currentColor"/>
-          <path d="M12 2V11M12 16L7 11H17L12 16Z" stroke="currentColor" strokeWidth="2"/>
-          <path d="M3 20H21" stroke="currentColor" strokeWidth="2"/>
-        </svg>
-        Download Logs
-      </button>
     </div>
   );
 };

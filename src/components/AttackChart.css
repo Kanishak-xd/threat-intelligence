@@ -16,9 +16,8 @@
 
 .chart-section {
     grid-area: chart;
-    background-color: #242424;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 60px;
 }
 
 .stats-section {
@@ -27,13 +26,14 @@
     flex-direction: column;
     gap: 20px;
     margin-bottom: 0;
+    position: relative;
 }
 
 .stat-card {
     flex: 1;
     background-color: #242424;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 60px;
     min-height: 80px;
 }
 
@@ -59,14 +59,14 @@
 .pie-chart-section {
     background-color: #242424;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 60px;
     height: 400px;
 }
 
 .credentials-section {
     background-color: #242424;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 60px;
     height: 400px;
     overflow: hidden;
     position: relative;
@@ -144,20 +144,19 @@
 }
 
 .download-button {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin-top: auto;
     padding: 12px 24px;
     background-color: #242424;
     border: 1px solid #333;
-    border-radius: 8px;
+    border-radius: 60px;
     cursor: pointer;
     color: #666;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: all 0.2s ease;
+    width: 100%;
+    justify-content: center;
 }
 
 .download-button:hover {
