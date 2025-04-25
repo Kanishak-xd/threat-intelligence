@@ -135,21 +135,6 @@ const AttackChart = () => {
 
   return (
     <div className="dashboard-container">
-      <div className="stats-section">
-        <div className="stat-card">
-          <div className="stat-title">Total Attacks</div>
-          <div className="stat-value">{stats.totalAttacks.toLocaleString()}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-title">Most Attacks in a Day</div>
-          <div className="stat-value">{stats.maxAttacksInDay.toLocaleString()}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-title">Total Run Time</div>
-          <div className="stat-value">{stats.totalRunTime}h</div>
-        </div>
-      </div>
-
       <div className="chart-section">
         <h3 className="chart-title">Attacks Over Time</h3>
         <ResponsiveContainer width="100%" height={300}>
@@ -178,53 +163,70 @@ const AttackChart = () => {
         </ResponsiveContainer>
       </div>
 
-      <div className="pie-chart-section">
-        <h3 className="chart-title">Top Attacking IPs</h3>
-        <ResponsiveContainer width="100%" height={350}>
-          <PieChart>
-            <Pie
-              data={ipData}
-              cx="50%"
-              cy="50%"
-              innerRadius={60}
-              outerRadius={100}
-              paddingAngle={2}
-              dataKey="value"
-            >
-              {ipData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
-            <Tooltip />
-            <Legend />
-          </PieChart>
-        </ResponsiveContainer>
+      <div className="stats-section">
+        <div className="stat-card">
+          <div className="stat-title">Total Attacks</div>
+          <div className="stat-value">{stats.totalAttacks.toLocaleString()}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-title">Most Attacks in a Day</div>
+          <div className="stat-value">{stats.maxAttacksInDay.toLocaleString()}</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-title">Total Run Time</div>
+          <div className="stat-value">{stats.totalRunTime}h</div>
+        </div>
       </div>
 
-      <div className="credentials-section">
-        <div className="credentials-table-wrapper">
-          <table className="credentials-table">
-            <thead>
-              <tr className="table-header">
-                <th className="table-header-cell">Username</th>
-                <th className="table-header-cell">Password</th>
-                <th className="table-header-cell">Attempts</th>
-              </tr>
-            </thead>
-            <tbody>
-              {displayedCredentials.map((cred, index) => (
-                <tr 
-                  key={index} 
-                  className="table-row"
-                  ref={index === displayedCredentials.length - 1 ? lastCredentialElementRef : null}
-                >
-                  <td className="table-cell">{cred.username}</td>
-                  <td className="table-cell">{cred.password}</td>
-                  <td className="table-cell">{cred.count}</td>
+      <div className="charts-container">
+        <div className="pie-chart-section">
+          <h3 className="chart-title">Top Attacking IPs</h3>
+          <ResponsiveContainer width="100%" height={350}>
+            <PieChart>
+              <Pie
+                data={ipData}
+                cx="50%"
+                cy="50%"
+                innerRadius={60}
+                outerRadius={100}
+                paddingAngle={2}
+                dataKey="value"
+              >
+                {ipData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend />
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="credentials-section">
+          <div className="credentials-table-wrapper">
+            <table className="credentials-table">
+              <thead>
+                <tr className="table-header">
+                  <th className="table-header-cell">Username</th>
+                  <th className="table-header-cell">Password</th>
+                  <th className="table-header-cell">Attempts</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {displayedCredentials.map((cred, index) => (
+                  <tr 
+                    key={index} 
+                    className="table-row"
+                    ref={index === displayedCredentials.length - 1 ? lastCredentialElementRef : null}
+                  >
+                    <td className="table-cell">{cred.username}</td>
+                    <td className="table-cell">{cred.password}</td>
+                    <td className="table-cell">{cred.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
