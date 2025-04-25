@@ -17,10 +17,11 @@ made in MERN Stack
 ## Run in your Environment
 
 After cloning and npm install,
+In a terminal, go to Backend Directory:
 ```
 cd backend
 ```
-Fetch logs file from Database:
+Fetch logs file from the Database:
 ```
 node mongoFetch.js
 ```
@@ -32,7 +33,7 @@ Run Backend:
 ```
 node server.js
 ```
-Open another terminal and Go to frontend directory:
+Open another terminal and Go to Frontend directory:
 ```
 cd src
 ```
