@@ -11,11 +11,19 @@ function NavLink({ to, children, onClick, isDashboardActive, currentPath }) {
     (to === '/home#dashboard' && isDashboardActive) ||
     (to === '/apintel' && currentPath === '/apintel');
   
+  const handleClick = (e) => {
+    if (to === '/home') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    if (onClick) onClick(e);
+  };
+  
   return (
     <Link 
       to={to} 
       className={`nav-link ${isActive ? 'active' : ''}`}
-      onClick={onClick}
+      onClick={handleClick}
     >
       {children}
     </Link>
