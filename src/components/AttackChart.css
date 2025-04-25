@@ -21,6 +21,7 @@
 .chart-section {
     grid-area: chart;
     padding: 2rem;
+    height: 300px;
     border-radius: 20px;
     background-color: #1A1A1A;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
