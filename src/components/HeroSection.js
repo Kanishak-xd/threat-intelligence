@@ -15,8 +15,8 @@ const HeroSection = ({ onExploreClick }) => {
       </div>
       <div className="hero-image">
         <img 
-          src="/hero-image.png" 
-          alt="Threat Intelligence Dashboard" 
+          src="https://i.pinimg.com/736x/fc/77/05/fc77054ec673c13d7777bf1ba588bac2.jpg" 
+          alt="Threat Intelligence" 
           className="hero-img"
         />
       </div>
