@@ -1,14 +1,17 @@
 .dashboard-container {
     width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
     padding: 20px;
     background-color: #000000;
     color: #FFFFFF;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: 70% 30%;
+    grid-template-columns: 1fr;
     grid-template-areas: 
-        "chart stats"
-        "charts charts";
+        "chart"
+        "stats"
+        "charts";
     gap: 20px;
     position: relative;
     padding-bottom: 60px; /* Make space for the download button */
@@ -18,20 +21,20 @@
     grid-area: chart;
     padding: 20px;
     border-radius: 40px;
+    background-color: #1A1A1A;
 }
 
 .stats-section {
     grid-area: stats;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     margin-bottom: 0;
     position: relative;
 }
 
 .stat-card {
-    flex: 1;
-    background-color: #1A1A1A ;
+    background-color: #1A1A1A;
     padding: 20px;
     border-radius: 25px;
     min-height: 80px;
@@ -52,28 +55,29 @@
 .charts-container {
     grid-area: charts;
     display: grid;
-    grid-template-columns: 35% 65%;
+    grid-template-columns: 1fr;
     gap: 20px;
 }
 
 .pie-chart-section {
-    background-color: #1A1A1A  ;
+    background-color: #1A1A1A;
     padding: 20px;
     border-radius: 25px;
-    height: 400px;
+    min-height: 400px;
 }
 
 .credentials-section {
-    background-color: #1A1A1A  ;
+    background-color: #1A1A1A;
     padding: 20px;
     border-radius: 25px;
-    height: 400px;
+    min-height: 400px;
     overflow: hidden;
     position: relative;
 }
 
 .credentials-table-wrapper {
     height: 100%;
+    max-height: 400px;
     overflow-y: auto;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
@@ -147,11 +151,10 @@
 }
 
 .download-button {
-    margin-top: auto;
-    padding: 12px 24px;
-    background-color: #1A1A1A ;
-    border: 1px solid #333;
+    background-color: #1A1A1A;
+    padding: 20px;
     border-radius: 25px;
+    min-height: 80px;
     cursor: pointer;
     color: #666;
     display: flex;
@@ -169,8 +172,8 @@
 }
 
 .download-button svg {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
 }
 
 /* Line chart customization */
@@ -208,4 +211,36 @@
 
 .recharts-pie:hover .recharts-legend-item {
     opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .dashboard-container {
+        grid-template-columns: 70% 30%;
+        grid-template-areas: 
+            "chart stats"
+            "charts charts";
+    }
+
+    .charts-container {
+        grid-template-columns: 35% 65%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .dashboard-container {
+        padding: 30px;
+    }
+
+    .chart-section,
+    .pie-chart-section,
+    .credentials-section {
+        padding: 25px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .dashboard-container {
+        padding: 40px;
+    }
 }
