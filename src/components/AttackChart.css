@@ -48,9 +48,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
 }
 
 .stat-card:hover {
@@ -63,6 +65,7 @@
     margin-bottom: 0.5rem;
     font-weight: 500;
     letter-spacing: 0.5px;
+    text-align: center;
 }
 
 .stat-value {
@@ -70,6 +73,7 @@
     font-size: 2rem;
     font-weight: 600;
     font-family: 'Inter', sans-serif;
+    text-align: center;
 }
 
 .charts-container {
@@ -142,7 +146,7 @@
 }
 
 .chart-title {
-    text-align: left;
+    text-align: center;
     color: #888;
     margin-bottom: 1.25rem;
     font-size: 1.125rem;
@@ -184,11 +188,12 @@
     top: 0;
     z-index: 1;
     backdrop-filter: blur(8px);
+    text-align: center;
 }
 
 .table-header-cell {
-    padding: 1rem 1.25rem;
-    text-align: left;
+    padding: 1rem 1.5rem;
+    text-align: center;
     color: #888;
     font-weight: 500;
     font-size: 0.875rem;
@@ -205,10 +210,11 @@
 }
 
 .table-cell {
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.5rem;
     color: #fff;
     font-size: 0.9375rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
 }
 
 .download-button {
@@ -219,15 +225,16 @@
     color: #888;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.75rem;
     transition: all 0.2s ease;
     width: 100%;
-    justify-content: center;
     font-weight: 500;
     font-size: 0.9375rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     min-height: 120px;
+    text-align: center;
 }
 
 .download-button:hover {
@@ -271,7 +278,7 @@
 /* Responsive adjustments */
 @media (min-width: 768px) {
     .dashboard-container {
-        grid-template-columns: 60% 40%;
+        grid-template-columns: 50% 50%;
         grid-template-areas: 
             "chart stats"
             "charts charts";
@@ -284,7 +291,8 @@
     }
 
     .charts-container {
-        grid-template-columns: 35% 65%;
+        grid-template-columns: 30% 68.5%;
+        gap: 1.5rem;
     }
 }
 
@@ -296,7 +304,7 @@
     .chart-section,
     .pie-chart-section,
     .credentials-section {
-        padding: 2rem;
+        padding: rem;
     }
 }
 
