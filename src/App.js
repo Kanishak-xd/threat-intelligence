@@ -5,10 +5,11 @@ import AttackChart from "./components/AttackChart";
 import HeroSection from "./components/HeroSection";
 import "./App.css";
 
-function NavLink({ to, children, onClick, isDashboardActive }) {
+function NavLink({ to, children, onClick, isDashboardActive, currentPath }) {
   const location = useLocation();
-  const isActive = (location.pathname === to && !isDashboardActive) || 
-    (to === '/home#dashboard' && isDashboardActive);
+  const isActive = (to === '/home' && currentPath === '/home' && !isDashboardActive) || 
+    (to === '/home#dashboard' && isDashboardActive) ||
+    (to === '/apintel' && currentPath === '/apintel');
   
   return (
     <Link 
@@ -24,6 +25,7 @@ function NavLink({ to, children, onClick, isDashboardActive }) {
 function App() {
   const [paragraph, setParagraph] = useState("");
   const [isDashboardActive, setIsDashboardActive] = useState(false);
+  const [currentPath, setCurrentPath] = useState('/home');
   const dashboardRef = useRef(null);
 
   useEffect(() => {
@@ -35,7 +37,7 @@ function App() {
     const handleScroll = () => {
       if (dashboardRef.current) {
         const rect = dashboardRef.current.getBoundingClientRect();
-        setIsDashboardActive(rect.top <= 100);
+        setIsDashboardActive(rect.top <= 200);
       }
     };
 
@@ -53,13 +55,13 @@ function App() {
         <nav className="nav-container">
           <ul className="nav-list">
             <li className="nav-item">
-              <NavLink to="/home" isDashboardActive={isDashboardActive}>Home</NavLink>
+              <NavLink to="/home" isDashboardActive={isDashboardActive} currentPath={currentPath}>Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/home#dashboard" onClick={scrollToDashboard} isDashboardActive={isDashboardActive}>Dashboard</NavLink>
+              <NavLink to="/home#dashboard" onClick={scrollToDashboard} isDashboardActive={isDashboardActive} currentPath={currentPath}>Dashboard</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/apintel" isDashboardActive={isDashboardActive}>API</NavLink>
+              <NavLink to="/apintel" isDashboardActive={isDashboardActive} currentPath={currentPath}>API</NavLink>
             </li>
           </ul>
         </nav>
@@ -70,7 +72,7 @@ function App() {
             <>
               <HeroSection onExploreClick={scrollToDashboard} />
               <div ref={dashboardRef} className="home-container">
-                <h1 className="home-title">Threat Intelligence Dashboard</h1>   
+                <h1 className="home-title">Threat Intelligence Dashboard</h1>
                 <AttackChart />
                 <p className="home-paragraph">{paragraph}</p>
               </div>

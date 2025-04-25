@@ -73,11 +73,17 @@
   border-radius: 4px;
   transition: all 0.3s ease;
   background-color: #1A1A1A;
+  display: inline-block;
 }
 
 .nav-link:hover {
-  background-color: #e9ecef;
-  color: #000000;
+  background-color: #333333;
+  color: #FEFEFE;
+}
+
+.nav-link.active {
+  background-color: #FEFEFE !important;
+  color: #000000 !important;
 }
 
 .home-container {
