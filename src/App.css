@@ -3,6 +3,7 @@
   background-color: #000000;
   min-height: 100vh;
   color: #FEFEFE;
+  overflow-x: hidden;
 }
 
 .App-logo {
@@ -39,6 +40,31 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FEFEFE;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #e0e0e0;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #FEFEFE transparent;
 }
 
 .nav-container {
@@ -90,6 +116,7 @@
   padding: 2rem;
   margin-top: 4rem;
   background-color: #000000;
+  overflow-x: hidden;
 }
 
 .home-title {
