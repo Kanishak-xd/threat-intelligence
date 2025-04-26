@@ -1,0 +1,80 @@
+.otx-section {
+    background-color: #1A1A1A;
+    padding: 2rem;
+    border-radius: 20px;
+}
+
+.otx-info {
+    margin-bottom: 1.5rem;
+}
+
+.otx-info h3 {
+    color: #FFFFFF;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.otx-info p {
+    color: #888;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.table-container {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #242424;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: #FFFFFF;
+}
+
+.table-header {
+    background-color: #1A1A1A;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.table-header-cell {
+    padding: 1rem;
+    text-align: left;
+    color: #888;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-row {
+    transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.table-cell {
+    padding: 1rem;
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.loading {
+    color: #888;
+    text-align: center;
+    padding: 2rem;
+}
+
+.error {
+    color: #ff4444;
+    text-align: center;
+    padding: 2rem;
+    background-color: rgba(255, 68, 68, 0.1);
+    border-radius: 8px;
+}

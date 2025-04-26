@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
+import { getApiUrl } from "./config";
 import Apintel from "./apintel";
 import AttackChart from "./components/AttackChart";
 import HeroSection from "./components/HeroSection";
@@ -14,7 +15,7 @@ function NavLink({ to, children, onClick, isDashboardActive, currentPath }) {
   const handleClick = (e) => {
     if (to === '/home') {
       e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.location.href = '/home';
     }
     if (onClick) onClick(e);
   };
@@ -31,17 +32,11 @@ function NavLink({ to, children, onClick, isDashboardActive, currentPath }) {
 }
 
 function App() {
-  const [paragraph, setParagraph] = useState("");
   const [isDashboardActive, setIsDashboardActive] = useState(false);
   const [currentPath, setCurrentPath] = useState('/home');
   const dashboardRef = useRef(null);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/paragraph")
-      .then((res) => res.json())
-      .then((data) => setParagraph(data.paragraph))
-      .catch((err) => console.error("Error fetching paragraph:", err));
-
     const handleScroll = () => {
       if (dashboardRef.current) {
         const rect = dashboardRef.current.getBoundingClientRect();
@@ -80,8 +75,8 @@ function App() {
             <>
               <HeroSection onExploreClick={scrollToDashboard} />
               <div ref={dashboardRef} className="home-container">
+                <h1 className="home-title">Threat Intelligence Dashboard</h1>
                 <AttackChart />
-                <p className="home-paragraph">{paragraph}</p>
               </div>
             </>
           } />

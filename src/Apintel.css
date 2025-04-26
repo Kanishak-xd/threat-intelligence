@@ -1,117 +1,182 @@
 .dashboard-container {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #0A0A0A;
+    color: #FFFFFF;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: calc(100vh - 200px);
+    /* Adjust based on your header height */
 }
 
 .dashboard-title {
-    text-align: center;
-    color: #333;
-    margin-bottom: 30px;
+    text-align: left;
+    color: #ffffff;
+    font-size: 1.75rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+    margin: 0 0 1rem 0;
+    padding: 0;
+}
+
+.dashboard-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 2rem;
+    width: 100%;
+    height: 100%;
+}
+
+.table-section {
+    background-color: #1A1A1A;
+    padding: 2rem;
+    border-radius: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .section-title {
-    color: #444;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
+    color: #888;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
 }
 
 .section-content {
-    color: #666;
+    color: #FFFFFF;
+    line-height: 1.6;
+    margin-top: 1rem;
 }
 
 .error-message {
-    color: red;
+    color: #ff4444;
+    padding: 1rem;
+    background-color: rgba(255, 68, 68, 0.1);
+    border-radius: 8px;
+    margin-top: 1rem;
 }
 
 .table-container {
-    max-height: 300px;
+    flex: 1;
     overflow-y: auto;
-    overflow-x: auto;
+    background-color: #242424;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    padding: 1rem;
 }
 
 .data-table {
     width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: #FFFFFF;
 }
 
 .table-header {
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #dee2e6;
+    background-color: #1A1A1A;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .table-header-cell {
-    padding: 12px 15px;
+    padding: 1rem;
     text-align: left;
-    font-weight: bold;
+    color: #888;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .table-row {
-    border-bottom: 1px solid #dee2e6;
+    transition: background-color 0.2s ease;
+}
+
+.table-row:hover {
+    background-color: rgba(255, 255, 255, 0.05);
 }
 
 .table-cell {
-    padding: 12px 15px;
+    padding: 1rem;
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .high-risk {
-    color: #dc3545;
+    color: #ff4444;
 }
 
 .medium-risk {
-    color: #ffc107;
+    color: #ffbb33;
 }
 
 .low-risk {
-    color: #28a745;
+    color: #00C851;
 }
 
 .search-section {
-    margin-bottom: 20px;
+    grid-column: 1 / -1;
+    background-color: #1A1A1A;
+    padding: 2rem;
+    border-radius: 20px;
 }
 
 .search-title {
-    margin-bottom: 10px;
+    color: #888;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
 }
 
 .search-container {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .search-input {
-    padding: 10px;
     flex: 1;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background-color: #242424;
+    color: #FFFFFF;
+    font-size: 1rem;
 }
 
 .search-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    padding: 0.75rem 1.5rem;
+    background-color: #242424;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
 }
 
 .search-button:hover {
-    background-color: #0056b3;
+    background-color: #2A2A2A;
 }
 
 .search-result {
-    background-color: #f1f1f1;
-    padding: 15px;
+    background-color: #242424;
+    padding: 1.5rem;
     border-radius: 8px;
+    margin-top: 1rem;
 }
 
 .search-result p {
-    margin: 5px 0;
+    margin: 0.5rem 0;
+    color: #FFFFFF;
+}
+
+.search-result strong {
+    color: #888;
+    margin-right: 0.5rem;
 }

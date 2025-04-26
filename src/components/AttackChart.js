@@ -3,6 +3,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, Legend 
 } from 'recharts';
+import { getApiUrl } from '../config';
 import './AttackChart.css';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1'];
@@ -36,7 +37,7 @@ const AttackChart = () => {
   }, [loading, credentialsData, displayedCredentials.length]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/logs')
+    fetch(getApiUrl('/api/logs'))
       .then(response => response.json())
       .then(data => {
         setRawLogs(data);
