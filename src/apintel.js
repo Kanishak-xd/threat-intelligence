@@ -81,7 +81,7 @@ function Apintel() {
 
   return (
     <>
-      <h1 className="dashboard-title">Threat Intelligence Dashboard</h1>
+      <h1 className="page-title">API Intelligence Dashboard</h1>
       <div className="dashboard-container">
         <div className="dashboard-content">
           {/* Sinking Yachts Phishing Domains */}

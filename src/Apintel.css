@@ -1,3 +1,13 @@
+.page-title {
+    text-align: center;
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.5px;
+    margin: 5rem 0 2rem 0;
+}
+
 .dashboard-container {
     width: 100%;
     max-width: 1400px;

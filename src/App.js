@@ -8,8 +8,7 @@ import "./App.css";
 
 function NavLink({ to, children, onClick, isDashboardActive, currentPath }) {
   const location = useLocation();
-  const isActive = (to === '/home' && currentPath === '/home' && !isDashboardActive) || 
-    (to === '/home#dashboard' && isDashboardActive) ||
+  const isActive = (to === '/home' && currentPath === '/home') || 
     (to === '/apintel' && currentPath === '/apintel');
   
   const handleClick = (e) => {
