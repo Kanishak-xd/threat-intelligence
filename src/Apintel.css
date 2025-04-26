@@ -27,26 +27,31 @@
 .dashboard-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 2rem;
+    grid-template-rows: auto;
+    gap: 1rem;
     width: 100%;
-    height: 100%;
+    height: auto;
+    margin-bottom: 1rem;
 }
 
 .table-section {
     background-color: #1A1A1A;
-    padding: 2rem;
+    padding: 1.5rem 1.5rem 0rem 1.5rem;
     border-radius: 20px;
-    height: 100%;
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0rem;
+    height: 98.5%;
+    min-height: 500px;
 }
 
 .section-title {
     color: #888;
     font-size: 1.25rem;
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 0;
     font-weight: 500;
+    padding: 0;
 }
 
 .section-content {
@@ -68,7 +73,11 @@
     overflow-y: auto;
     background-color: #242424;
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0.75rem;
+    margin: 0;
+    max-height: 400px;
+    height: 100%;
+    min-height: 400px;
 }
 
 .data-table {
@@ -107,6 +116,10 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.table-cell:last-child {
+    border-bottom: none;
+}
+
 .high-risk {
     color: #ff4444;
 }
@@ -122,8 +135,9 @@
 .search-section {
     grid-column: 1 / -1;
     background-color: #1A1A1A;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 20px;
+    margin-top: 1rem;
 }
 
 .search-title {
@@ -179,4 +193,19 @@
 .search-result strong {
     color: #888;
     margin-right: 0.5rem;
+}
+
+.loading {
+    color: #888;
+    text-align: center;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.table-section:nth-child(2) .section-title {
+    padding-top: 1.4rem;
+}
+
+.table-section:nth-child(2) .table-container {
+    padding-top: 1rem;
 }

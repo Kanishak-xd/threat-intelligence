@@ -1,7 +1,20 @@
 .otx-section {
     background-color: #1A1A1A;
-    padding: 2rem;
+    padding: 1.5rem;
     border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    height: 100%;
+    min-height: 500px;
+}
+
+.section-title {
+    color: #888;
+    font-size: 1.25rem;
+    margin: 0 0 1rem 0;
+    font-weight: 500;
+    padding: 0;
 }
 
 .otx-info {
@@ -21,12 +34,15 @@
 }
 
 .table-container {
-    width: 100%;
-    max-height: 400px;
+    flex: 1;
     overflow-y: auto;
     background-color: #242424;
     border-radius: 8px;
-    padding: 1rem;
+    padding: 0.75rem;
+    margin: 0;
+    max-height: 400px;
+    height: 100%;
+    min-height: 400px;
 }
 
 .data-table {
