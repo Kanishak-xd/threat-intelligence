@@ -4,6 +4,7 @@ import { getApiUrl } from "./config";
 import Apintel from "./apintel";
 import AttackChart from "./components/AttackChart";
 import HeroSection from "./components/HeroSection";
+import About from "./components/About";
 import "./App.css";
 
 function NavLink({ to, children, onClick, isDashboardActive, currentPath }) {
@@ -65,6 +66,9 @@ function App() {
             <li className="nav-item">
               <NavLink to="/apintel" isDashboardActive={isDashboardActive} currentPath={currentPath}>API</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink to="/about" isDashboardActive={isDashboardActive} currentPath={currentPath}>About</NavLink>
+            </li>
           </ul>
         </nav>
 
@@ -74,12 +78,12 @@ function App() {
             <>
               <HeroSection onExploreClick={scrollToDashboard} />
               <div ref={dashboardRef} className="home-container">
-                <h1 className="home-title">Threat Intelligence Dashboard</h1>
                 <AttackChart />
               </div>
             </>
           } />
           <Route path="/apintel" element={<Apintel />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </div>
     </Router>
