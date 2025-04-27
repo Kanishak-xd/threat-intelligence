@@ -68,7 +68,7 @@
 }
 
 .nav-container {
-  background-color: #1a1a1a;
+  background-color: transparent;
   padding: 1rem 2rem;
   position: fixed;
   top: 0;
@@ -97,22 +97,26 @@
   font-size: 1.1rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
-  border-radius: 4px;
+  border-radius: 17px;
   transition: all 0.3s ease;
+  background-color: #1A1A1A;
+  display: inline-block;
 }
 
 .nav-link:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #333333;
+  color: #FEFEFE;
 }
 
 .nav-link.active {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: #FEFEFE !important;
+  color: #000000 !important;
 }
 
 .home-container {
   padding-top: 6rem;
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #000000;
 }
 
 .home-title {

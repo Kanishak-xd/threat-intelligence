@@ -10,19 +10,11 @@ function NavLink({ to, children, onClick, isDashboardActive }) {
   const location = useLocation();
   const isActive = location.pathname === to;
   
-  const handleClick = (e) => {
-    if (to === '/home') {
-      e.preventDefault();
-      window.location.href = '/home';
-    }
-    if (onClick) onClick(e);
-  };
-  
   return (
     <Link 
       to={to} 
       className={`nav-link ${isActive ? 'active' : ''}`}
-      onClick={handleClick}
+      onClick={onClick}
     >
       {children}
     </Link>
@@ -55,23 +47,22 @@ function App() {
         <nav className="nav-container">
           <ul className="nav-list">
             <li className="nav-item">
-              <NavLink to="/home" isDashboardActive={isDashboardActive}>Home</NavLink>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/home#dashboard" onClick={scrollToDashboard} isDashboardActive={isDashboardActive}>Dashboard</NavLink>
+              <NavLink to="/#dashboard" onClick={scrollToDashboard}>Dashboard</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/apintel" isDashboardActive={isDashboardActive}>API</NavLink>
+              <NavLink to="/apintel">API</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/about" isDashboardActive={isDashboardActive}>About</NavLink>
+              <NavLink to="/about">About</NavLink>
             </li>
           </ul>
         </nav>
 
         <Routes>
-          <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route path="/home" element={
+          <Route path="/" element={
             <>
               <HeroSection onExploreClick={scrollToDashboard} />
               <div ref={dashboardRef} className="home-container">
