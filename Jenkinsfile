@@ -46,27 +46,46 @@ pipeline {
             steps {
                 script {
                     try {
-                        echo 'Deploying to staging environment...'
+                        echo 'Starting deployment to staging environment...'
                         
-                        // Stop and remove any existing containers
-                        bat 'docker-compose -f docker-compose.staging.yml down --remove-orphans'
+                        // Step 1: Stop and remove existing containers
+                        echo 'Step 1: Stopping existing containers...'
+                        def downResult = bat(returnStatus: true, script: 'docker-compose -f docker-compose.staging.yml down --remove-orphans')
+                        if (downResult != 0) {
+                            echo "Warning: docker-compose down returned ${downResult}"
+                        }
                         
-                        // Force remove any containers that might be using the ports
-                        bat 'docker rm -f threat_intelligence-frontend-1 threat_intelligence-backend-1 2>nul'
+                        // Step 2: Force remove containers
+                        echo 'Step 2: Force removing containers...'
+                        def rmResult = bat(returnStatus: true, script: 'docker rm -f threat_intelligence-frontend-1 threat_intelligence-backend-1 2>nul')
+                        if (rmResult != 0) {
+                            echo "Warning: docker rm returned ${rmResult}"
+                        }
                         
-                        // Remove any existing networks
-                        bat 'docker network rm threat_intelligence_app-network 2>nul'
+                        // Step 3: Remove network
+                        echo 'Step 3: Removing network...'
+                        def networkResult = bat(returnStatus: true, script: 'docker network rm threat_intelligence_app-network 2>nul')
+                        if (networkResult != 0) {
+                            echo "Warning: docker network rm returned ${networkResult}"
+                        }
                         
-                        // Wait a moment to ensure ports are released
+                        // Step 4: Wait for ports to be released
+                        echo 'Step 4: Waiting for ports to be released...'
                         bat 'ping -n 6 127.0.0.1 >nul'
                         
-                        // Start new containers
-                        bat 'docker-compose -f docker-compose.staging.yml up -d'
+                        // Step 5: Start new containers
+                        echo 'Step 5: Starting new containers...'
+                        def upResult = bat(returnStatus: true, script: 'docker-compose -f docker-compose.staging.yml up -d')
+                        if (upResult != 0) {
+                            error "Failed to start containers: docker-compose up returned ${upResult}"
+                        }
                         
-                        // Wait for services to be ready
+                        // Step 6: Wait for services to be ready
+                        echo 'Step 6: Waiting for services to be ready...'
                         bat 'ping -n 11 127.0.0.1 >nul'
                         
-                        // Verify services are running
+                        // Step 7: Verify services are running
+                        echo 'Step 7: Verifying services...'
                         bat 'docker ps'
                         
                         echo 'Deployment completed successfully!'
