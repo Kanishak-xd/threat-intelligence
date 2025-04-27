@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     echo 'Building frontend...'
-                    sh 'docker build -t ${DOCKER_IMAGE}-frontend:${DOCKER_TAG} .'
+                    bat 'docker build -t %DOCKER_IMAGE%-frontend:%DOCKER_TAG% .'
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     echo 'Building backend...'
-                    sh 'docker build -t ${DOCKER_IMAGE}-backend:${DOCKER_TAG} -f backend/Dockerfile.backend ./backend'
+                    bat 'docker build -t %DOCKER_IMAGE%-backend:%DOCKER_TAG% -f backend/Dockerfile.backend ./backend'
                 }
             }
         }
@@ -46,7 +46,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running tests...'
-                    sh 'npm test'
+                    bat 'npm test'
                 }
             }
         }
@@ -56,11 +56,11 @@ pipeline {
                 script {
                     echo 'Deploying to staging environment...'
                     // Push images to registry if needed
-                    // sh 'docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}-frontend:${DOCKER_TAG}'
-                    // sh 'docker push ${DOCKER_REGISTRY}/${DOCKER_IMAGE}-backend:${DOCKER_TAG}'
+                    // bat 'docker push %DOCKER_REGISTRY%/%DOCKER_IMAGE%-frontend:%DOCKER_TAG%'
+                    // bat 'docker push %DOCKER_REGISTRY%/%DOCKER_IMAGE%-backend:%DOCKER_TAG%'
                     
                     // Deploy using docker-compose
-                    sh 'docker-compose -f docker-compose.staging.yml up -d'
+                    bat 'docker-compose -f docker-compose.staging.yml up -d'
                 }
             }
         }
