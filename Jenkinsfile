@@ -53,17 +53,17 @@ pipeline {
                     // Force remove any containers that might be using the ports
                     bat 'docker rm -f threat_intelligence-frontend-1 threat_intelligence-backend-1 2>nul'
                     
-                    // Remove any existing networks (with error handling)
-                    bat 'docker network rm threat_intelligence_app-network 2>nul || ver >nul'
+                    // Remove any existing networks
+                    bat 'docker network rm threat_intelligence_app-network 2>nul'
                     
-                    // Wait a moment to ensure ports are released
-                    bat 'timeout /t 5'
+                    // Wait a moment to ensure ports are released (using ping as a delay)
+                    bat 'ping -n 6 127.0.0.1 >nul'
                     
                     // Start new containers
                     bat 'docker-compose -f docker-compose.staging.yml up -d'
                     
                     // Wait for services to be ready
-                    bat 'timeout /t 10'
+                    bat 'ping -n 11 127.0.0.1 >nul'
                     
                     // Verify services are running
                     bat 'docker ps'
