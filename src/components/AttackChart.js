@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { 
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
-  PieChart, Pie, Cell, Legend 
+  PieChart, Pie, Cell
 } from 'recharts';
 import { getApiUrl } from '../config';
 import './AttackChart.css';
@@ -20,10 +20,8 @@ const AttackChart = () => {
     maxAttacksInDay: 0,
     totalRunTime: 0
   });
-  const [loading, setLoading] = useState(false);
   const observer = useRef();
   const lastCredentialElementRef = useCallback(node => {
-    if (loading) return;
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && displayedCredentials.length < credentialsData.length) {
@@ -34,7 +32,7 @@ const AttackChart = () => {
       }
     });
     if (node) observer.current.observe(node);
-  }, [loading, credentialsData, displayedCredentials.length]);
+  }, [credentialsData, displayedCredentials.length]);
 
   useEffect(() => {
     fetch(getApiUrl('/api/logs'))

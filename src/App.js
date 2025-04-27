@@ -1,16 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
-import { getApiUrl } from "./config";
 import Apintel from "./apintel";
 import AttackChart from "./components/AttackChart";
 import HeroSection from "./components/HeroSection";
 import About from "./components/About";
 import "./App.css";
 
-function NavLink({ to, children, onClick, isDashboardActive, currentPath }) {
+function NavLink({ to, children, onClick, isDashboardActive }) {
   const location = useLocation();
-  const isActive = (to === '/home' && currentPath === '/home') || 
-    (to === '/apintel' && currentPath === '/apintel');
+  const isActive = location.pathname === to;
   
   const handleClick = (e) => {
     if (to === '/home') {
@@ -33,7 +31,6 @@ function NavLink({ to, children, onClick, isDashboardActive, currentPath }) {
 
 function App() {
   const [isDashboardActive, setIsDashboardActive] = useState(false);
-  const [currentPath, setCurrentPath] = useState('/home');
   const dashboardRef = useRef(null);
 
   useEffect(() => {
@@ -48,42 +45,26 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToDashboard = () => {
-    dashboardRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <Router>
       <div className="App">
-        <nav className="nav-container">
-          <ul className="nav-list">
-            <li className="nav-item">
-              <NavLink to="/home" isDashboardActive={isDashboardActive} currentPath={currentPath}>Home</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/home#dashboard" onClick={scrollToDashboard} isDashboardActive={isDashboardActive} currentPath={currentPath}>Dashboard</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/apintel" isDashboardActive={isDashboardActive} currentPath={currentPath}>API</NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/about" isDashboardActive={isDashboardActive} currentPath={currentPath}>About</NavLink>
-            </li>
-          </ul>
+        <nav className="navbar">
+          <div className="nav-links">
+            <NavLink to="/home" isDashboardActive={isDashboardActive}>Home</NavLink>
+            <NavLink to="/apintel" isDashboardActive={isDashboardActive}>IP Intelligence</NavLink>
+            <NavLink to="/attack-chart" isDashboardActive={isDashboardActive}>Attack Chart</NavLink>
+          </div>
         </nav>
-
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={
-            <>
-              <HeroSection onExploreClick={scrollToDashboard} />
-              <div ref={dashboardRef} className="home-container">
-                <AttackChart />
-              </div>
-            </>
+            <div ref={dashboardRef}>
+              <HeroSection />
+              <About />
+            </div>
           } />
           <Route path="/apintel" element={<Apintel />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/attack-chart" element={<AttackChart />} />
         </Routes>
       </div>
     </Router>
