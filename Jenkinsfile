@@ -46,8 +46,18 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying to staging environment...'
-                    // Stop any existing containers
-                    bat 'docker-compose -f docker-compose.staging.yml down'
+                    
+                    // Stop and remove any existing containers
+                    bat 'docker-compose -f docker-compose.staging.yml down --remove-orphans'
+                    
+                    // Force remove any containers that might be using the ports
+                    bat 'docker rm -f $(docker ps -a -q --filter name=threat_intelligence) || true'
+                    
+                    // Remove any existing networks
+                    bat 'docker network rm threat_intelligence_app-network || true'
+                    
+                    // Wait a moment to ensure ports are released
+                    bat 'timeout /t 5'
                     
                     // Start new containers
                     bat 'docker-compose -f docker-compose.staging.yml up -d'
