@@ -23,7 +23,6 @@ A comprehensive threat intelligence platform that monitors and analyzes security
   - Responsive design
   - Intuitive navigation
   - Dark theme for better visibility
-  - Smooth scrolling and transitions
 
 ## Tech Stack
 
@@ -32,16 +31,18 @@ A comprehensive threat intelligence platform that monitors and analyzes security
   - Chart.js & React-Chartjs-2 for visualizations
   - React Router for navigation
   - Fetch API for data requests
+  - Hosted on Netlify
 
 - **Backend**
   - Node.js with Express.js
-  - MongoDB for database
+  - MongoDB Atlas for cloud database
   - RESTful API architecture
+  - Hosted on Render
 
 - **Infrastructure**
   - Docker for containerization
   - Jenkins for CI/CD
-  - AWS EC2 for deployment
+  - AWS EC2 for Honeypot deployment
   - Cowrie Honeypot for threat data collection
 
 ## Getting Started
@@ -49,7 +50,7 @@ A comprehensive threat intelligence platform that monitors and analyzes security
 ### Prerequisites
 
 - Node.js (v14 or higher)
-- MongoDB
+- MongoDB Atlas account
 - Docker (optional)
 
 ### Installation
@@ -71,7 +72,7 @@ A comprehensive threat intelligence platform that monitors and analyzes security
    npm install
    ```
 
-4. Start MongoDB service
+4. Set up MongoDB Atlas connection
 
 5. Start the backend server:
    ```bash
@@ -121,10 +122,3 @@ threat-intelligence/
 - `GET /api/logs` - Fetch security logs
 - `GET /api/attack-data/aggregated` - Get aggregated attack data
 - `GET /api/ip-intel` - Get IP intelligence data
-
-## Acknowledgments
-
-- Chart.js for visualization components
-- React community for excellent documentation
-- Cowrie Honeypot project
-- AWS for cloud infrastructure
