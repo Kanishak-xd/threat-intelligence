@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import Apintel from "./apintel";
 import AttackChart from "./components/AttackChart";
 import HeroSection from "./components/HeroSection";
@@ -8,7 +8,7 @@ import "./App.css";
 
 function NavLink({ to, children, onClick, isDashboardActive }) {
   const location = useLocation();
-  const isActive = location.pathname === to;
+  const isActive = location.pathname === to || (to === '/#dashboard' && isDashboardActive);
   
   return (
     <Link 
@@ -47,16 +47,16 @@ function App() {
         <nav className="nav-container">
           <ul className="nav-list">
             <li className="nav-item">
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" isDashboardActive={isDashboardActive}>Home</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/#dashboard" onClick={scrollToDashboard}>Dashboard</NavLink>
+              <NavLink to="/#dashboard" onClick={scrollToDashboard} isDashboardActive={isDashboardActive}>Dashboard</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/apintel">API</NavLink>
+              <NavLink to="/apintel" isDashboardActive={isDashboardActive}>API</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink to="/about">About</NavLink>
+              <NavLink to="/about" isDashboardActive={isDashboardActive}>About</NavLink>
             </li>
           </ul>
         </nav>
