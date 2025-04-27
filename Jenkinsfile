@@ -69,33 +69,44 @@ pipeline {
                             echo "Warning: docker network rm returned ${networkResult}"
                         }
 
-                        // Step 4: Check and kill process using port 5050
+                        // Step 4: Check and kill all processes using port 5050
                         echo 'Step 4: Checking for processes using port 5050...'
                         def portCheck = bat(returnStatus: true, script: 'netstat -ano | findstr :5050')
                         if (portCheck == 0) {
-                            echo 'Found process using port 5050, attempting to kill it...'
-                            def pid = bat(returnStdout: true, script: 'netstat -ano | findstr :5050').trim().split()[-1]
-                            bat "taskkill /F /PID ${pid}"
-                            echo "Killed process with PID ${pid}"
+                            echo 'Found processes using port 5050, attempting to kill them...'
+                            def processes = bat(returnStdout: true, script: 'netstat -ano | findstr :5050').trim().split('\n')
+                            processes.each { process ->
+                                def pid = process.trim().split()[-1]
+                                echo "Killing process with PID ${pid}"
+                                bat "taskkill /F /PID ${pid}"
+                            }
+                            echo 'All processes using port 5050 have been terminated'
                         }
                         
-                        // Step 5: Wait for ports to be released
-                        echo 'Step 5: Waiting for ports to be released...'
+                        // Step 5: Verify port is free
+                        echo 'Step 5: Verifying port 5050 is free...'
+                        def verifyPort = bat(returnStatus: true, script: 'netstat -ano | findstr :5050')
+                        if (verifyPort == 0) {
+                            error 'Port 5050 is still in use after cleanup'
+                        }
+                        
+                        // Step 6: Wait for ports to be released
+                        echo 'Step 6: Waiting for ports to be released...'
                         bat 'ping -n 6 127.0.0.1 >nul'
                         
-                        // Step 6: Start new containers
-                        echo 'Step 6: Starting new containers...'
+                        // Step 7: Start new containers
+                        echo 'Step 7: Starting new containers...'
                         def upResult = bat(returnStatus: true, script: 'docker-compose -f docker-compose.staging.yml up -d')
                         if (upResult != 0) {
                             error "Failed to start containers: docker-compose up returned ${upResult}"
                         }
                         
-                        // Step 7: Wait for services to be ready
-                        echo 'Step 7: Waiting for services to be ready...'
+                        // Step 8: Wait for services to be ready
+                        echo 'Step 8: Waiting for services to be ready...'
                         bat 'ping -n 11 127.0.0.1 >nul'
                         
-                        // Step 8: Verify services are running
-                        echo 'Step 8: Verifying services...'
+                        // Step 9: Verify services are running
+                        echo 'Step 9: Verifying services...'
                         bat 'docker ps'
                         
                         echo 'Deployment completed successfully!'
@@ -124,4 +135,4 @@ pipeline {
             // Add notification here if needed
         }
     }
-} 
+}
