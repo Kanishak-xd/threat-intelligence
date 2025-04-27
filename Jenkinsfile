@@ -54,7 +54,13 @@ pipeline {
                     bat 'docker rm -f threat_intelligence-frontend-1 threat_intelligence-backend-1 2>nul'
                     
                     // Remove any existing networks (ignore errors)
-                    bat 'docker network rm threat_intelligence_app-network 2>nul || exit 0'
+                    bat '''
+                        @echo off
+                        docker network ls | findstr threat_intelligence_app-network >nul
+                        if not errorlevel 1 (
+                            docker network rm threat_intelligence_app-network
+                        )
+                    '''
                     
                     // Wait a moment to ensure ports are released
                     bat 'timeout /t 5'
