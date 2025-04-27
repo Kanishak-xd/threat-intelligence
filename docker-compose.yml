@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_API_URL=http://backend:5050
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    ports:
+      - "5050:5050"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - PORT=5050
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge 

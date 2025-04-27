@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: ${DOCKER_IMAGE}-frontend:${DOCKER_TAG}
+    ports:
+      - "3000:80"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=staging
+      - REACT_APP_API_URL=http://backend:5050
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    image: ${DOCKER_IMAGE}-backend:${DOCKER_TAG}
+    ports:
+      - "5050:5050"
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=staging
+      - PORT=5050
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge 
