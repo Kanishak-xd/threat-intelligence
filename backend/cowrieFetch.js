@@ -4,7 +4,7 @@ const cors = require("cors");
 const { exec } = require("child_process");
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = 5051;
 
 const EC2_IP = process.env.EC2_IP;
 const PRIVATE_KEY = `"${process.env.PRIVATE_KEY}"`;

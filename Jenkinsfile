@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     environment {
+        NODE_VERSION = '18'
         DOCKER_IMAGE = 'threat-intelligence'
         DOCKER_TAG = "${env.BUILD_NUMBER}"
         DOCKER_REGISTRY = 'your-docker-registry' // Replace with your registry
@@ -15,21 +16,48 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: '*/master']],
-                    userRemoteConfigs: [[url: 'https://github.com/Kanishak-xd/threat-intelligence.git']]
-                ])
-                echo 'Checking out source code...'
+                checkout scm
+            }
+        }
+
+        stage('Setup Node.js') {
+            steps {
+                nodejs(nodeJSInstallationName: 'NodeJS') {
+                    sh 'node --version'
+                    sh 'npm --version'
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+                dir('backend') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'npm test'
             }
         }
 
         stage('Build Frontend') {
             steps {
-                script {
-                    echo 'Building frontend...'
-                    bat 'docker build -t %DOCKER_IMAGE%-frontend:%DOCKER_TAG% .'
-                }
+                sh 'npm run build'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Deploy to Vercel (frontend)
+                sh 'npm run deploy'
+                
+                // Deploy to Render (backend)
+                // Note: This would typically be handled by Render's webhook
+                // or you can use the Render CLI if available
             }
         }
 
@@ -122,7 +150,6 @@ pipeline {
 
     post {
         always {
-            // Clean up workspace
             cleanWs()
             echo 'Pipeline completed!'
         }

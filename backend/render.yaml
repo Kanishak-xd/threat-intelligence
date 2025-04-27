@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: threat-intelligence-backend
+    env: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5050
+      - key: OTX_API_KEY
+        sync: false
+      - key: ABUSEIPDB_API_KEY
+        sync: false
+      - key: MONGODB_URI
+        sync: false 
