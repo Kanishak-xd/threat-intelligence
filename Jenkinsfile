@@ -45,28 +45,36 @@ pipeline {
         stage('Deploy to Staging') {
             steps {
                 script {
-                    echo 'Deploying to staging environment...'
-                    
-                    // Stop and remove any existing containers
-                    bat 'docker-compose -f docker-compose.staging.yml down --remove-orphans'
-                    
-                    // Force remove any containers that might be using the ports
-                    bat 'docker rm -f threat_intelligence-frontend-1 threat_intelligence-backend-1 2>nul'
-                    
-                    // Remove any existing networks
-                    bat 'docker network rm threat_intelligence_app-network 2>nul'
-                    
-                    // Wait a moment to ensure ports are released (using ping as a delay)
-                    bat 'ping -n 6 127.0.0.1 >nul'
-                    
-                    // Start new containers
-                    bat 'docker-compose -f docker-compose.staging.yml up -d'
-                    
-                    // Wait for services to be ready
-                    bat 'ping -n 11 127.0.0.1 >nul'
-                    
-                    // Verify services are running
-                    bat 'docker ps'
+                    try {
+                        echo 'Deploying to staging environment...'
+                        
+                        // Stop and remove any existing containers
+                        bat 'docker-compose -f docker-compose.staging.yml down --remove-orphans'
+                        
+                        // Force remove any containers that might be using the ports
+                        bat 'docker rm -f threat_intelligence-frontend-1 threat_intelligence-backend-1 2>nul'
+                        
+                        // Remove any existing networks
+                        bat 'docker network rm threat_intelligence_app-network 2>nul'
+                        
+                        // Wait a moment to ensure ports are released
+                        bat 'ping -n 6 127.0.0.1 >nul'
+                        
+                        // Start new containers
+                        bat 'docker-compose -f docker-compose.staging.yml up -d'
+                        
+                        // Wait for services to be ready
+                        bat 'ping -n 11 127.0.0.1 >nul'
+                        
+                        // Verify services are running
+                        bat 'docker ps'
+                        
+                        echo 'Deployment completed successfully!'
+                    } catch (Exception e) {
+                        echo "Deployment failed: ${e.message}"
+                        currentBuild.result = 'FAILURE'
+                        throw e
+                    }
                 }
             }
         }
