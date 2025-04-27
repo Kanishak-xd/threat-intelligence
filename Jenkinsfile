@@ -51,10 +51,10 @@ pipeline {
                     bat 'docker-compose -f docker-compose.staging.yml down --remove-orphans'
                     
                     // Force remove any containers that might be using the ports
-                    bat 'docker rm -f $(docker ps -a -q --filter name=threat_intelligence) || true'
+                    bat 'for /f "tokens=*" %%i in (\'docker ps -a -q --filter name=threat_intelligence\') do docker rm -f %%i'
                     
                     // Remove any existing networks
-                    bat 'docker network rm threat_intelligence_app-network || true'
+                    bat 'docker network rm threat_intelligence_app-network 2>nul || echo Network does not exist'
                     
                     // Wait a moment to ensure ports are released
                     bat 'timeout /t 5'
