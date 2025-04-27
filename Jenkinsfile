@@ -46,7 +46,10 @@ pipeline {
             steps {
                 script {
                     echo 'Running tests...'
-                    bat 'npm test'
+                    // Run tests in a temporary container
+                    bat '''
+                        docker run --rm -v "%WORKSPACE%:/app" -w /app node:18-alpine sh -c "npm install && npm test"
+                    '''
                 }
             }
         }
