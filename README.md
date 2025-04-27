@@ -1,44 +1,130 @@
-# Threat Intelligence Dashboard website
+# Threat Intelligence Dashboard
 
-## Team members
+A comprehensive threat intelligence platform that monitors and analyzes security threats. This project provides a user-friendly interface for visualizing attack patterns, analyzing IP threats, and monitoring security events.
 
-- Kanishak
-- Karma
-- Suhana
-- Devansh
+## Features
 
-made in MERN Stack
+- **Real-time Attack Monitoring**
+  - Line chart showing attack frequency over time
+  - Interactive visualization of attack patterns
+  - Detailed statistics and metrics
 
-- Frontend - React
-- Backend - ExpressJS
-- Database - MongoDB Atlas
-- Honeypot - AWS EC2 Cowrie
+- **IP Intelligence**
+  - Top attacking IPs visualization
+  - Detailed IP threat analysis
+  - Blacklisted IP tracking
 
-## Run in your Environment
+- **Credentials Monitoring**
+  - Real-time tracking of credential attempts
+  - Username/password attempt statistics
+  - Attack pattern analysis
 
-After cloning and npm install,
-In a terminal, go to Backend Directory:
+- **User-Friendly Interface**
+  - Responsive design
+  - Intuitive navigation
+  - Dark theme for better visibility
+  - Smooth scrolling and transitions
+
+## Tech Stack
+
+- **Frontend**
+  - React.js
+  - Chart.js & React-Chartjs-2 for visualizations
+  - React Router for navigation
+  - Fetch API for data requests
+
+- **Backend**
+  - Node.js with Express.js
+  - MongoDB for database
+  - RESTful API architecture
+
+- **Infrastructure**
+  - Docker for containerization
+  - Jenkins for CI/CD
+  - AWS EC2 for deployment
+  - Cowrie Honeypot for threat data collection
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- MongoDB
+- Docker (optional)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Kanishak-xd/threat-intelligence.git
+   cd threat-intelligence
+   ```
+
+2. Install frontend dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Install backend dependencies:
+   ```bash
+   cd backend
+   npm install
+   ```
+
+4. Start MongoDB service
+
+5. Start the backend server:
+   ```bash
+   cd backend
+   node server.js
+   ```
+
+6. Start the frontend development server:
+   ```bash
+   npm start
+   ```
+
+7. Access the application at `http://localhost:3000`
+
+### Docker Deployment
+
+1. Build and run using Docker Compose:
+   ```bash
+   docker-compose up --build
+   ```
+
+2. Access the application at `http://localhost:3000`
+
+## Project Structure
+
 ```
-cd backend
+threat-intelligence/
+├── src/
+│   ├── components/
+│   │   ├── AttackChart.js
+│   │   └── AttackChart.css
+│   ├── App.js
+│   ├── App.css
+│   └── apintel.js
+├── backend/
+│   ├── server.js
+│   ├── mongoFetch.js
+│   ├── processLogs.js
+│   └── package.json
+├── public/
+├── package.json
+└── README.md
 ```
-Fetch logs file from the Database:
-```
-node mongoFetch.js
-```
-Filter logs from monLogs.json into processed_logs.json:
-```
-node processLogs.js
-```
-Run Backend:
-```
-node server.js
-```
-Open another terminal and Go to Frontend directory:
-```
-cd src
-```
-Run Frontend:
-```
-npm start
-```
-Go to http://localhost:3000/home
+
+## API Endpoints
+
+- `GET /api/logs` - Fetch security logs
+- `GET /api/attack-data/aggregated` - Get aggregated attack data
+- `GET /api/ip-intel` - Get IP intelligence data
+
+## Acknowledgments
+
+- Chart.js for visualization components
+- React community for excellent documentation
+- Cowrie Honeypot project
+- AWS for cloud infrastructure
