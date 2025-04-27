@@ -18,7 +18,7 @@ pipeline {
                 checkout([
                     $class: 'GitSCM',
                     branches: [[name: '*/master']],
-                    userRemoteConfigs: [[url: 'YOUR_REPOSITORY_URL']]
+                    userRemoteConfigs: [[url: 'https://github.com/Kanishak-xd/threat-intelligence.git']]
                 ])
                 echo 'Checking out source code...'
             }
