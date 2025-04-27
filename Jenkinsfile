@@ -52,7 +52,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                // Deploy to Vercel (frontend)
+                // Deploy to Netlify (frontend)
                 sh 'npm run deploy'
                 
                 // Deploy to Render (backend)
