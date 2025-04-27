@@ -45,26 +45,42 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToDashboard = () => {
+    dashboardRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <Router>
       <div className="App">
-        <nav className="navbar">
-          <div className="nav-links">
-            <NavLink to="/home" isDashboardActive={isDashboardActive}>Home</NavLink>
-            <NavLink to="/apintel" isDashboardActive={isDashboardActive}>IP Intelligence</NavLink>
-            <NavLink to="/attack-chart" isDashboardActive={isDashboardActive}>Attack Chart</NavLink>
-          </div>
+        <nav className="nav-container">
+          <ul className="nav-list">
+            <li className="nav-item">
+              <NavLink to="/home" isDashboardActive={isDashboardActive}>Home</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/home#dashboard" onClick={scrollToDashboard} isDashboardActive={isDashboardActive}>Dashboard</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/apintel" isDashboardActive={isDashboardActive}>API</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/about" isDashboardActive={isDashboardActive}>About</NavLink>
+            </li>
+          </ul>
         </nav>
+
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route path="/home" element={
-            <div ref={dashboardRef}>
-              <HeroSection />
-              <About />
-            </div>
+            <>
+              <HeroSection onExploreClick={scrollToDashboard} />
+              <div ref={dashboardRef} className="home-container">
+                <AttackChart />
+              </div>
+            </>
           } />
           <Route path="/apintel" element={<Apintel />} />
-          <Route path="/attack-chart" element={<AttackChart />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </div>
     </Router>
