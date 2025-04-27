@@ -7,10 +7,19 @@ pipeline {
         DOCKER_REGISTRY = 'your-docker-registry' // Replace with your registry
     }
 
+    // Specify the branch
+    triggers {
+        pollSCM('H/5 * * * *') // Poll SCM every 5 minutes
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/master']],
+                    userRemoteConfigs: [[url: 'YOUR_REPOSITORY_URL']]
+                ])
                 echo 'Checking out source code...'
             }
         }
