@@ -3,6 +3,8 @@ pipeline {
     
     environment {
         DOCKER_COMPOSE = 'docker-compose'
+        // This will be set in Jenkins credentials
+        ABUSEIPDB_API_KEY = credentials('ABUSEIPDB_API_KEY')
     }
     
     stages {
@@ -16,6 +18,12 @@ pipeline {
             steps {
                 bat 'npm install'
                 bat 'npm run build'
+                
+                // Create .env file with the API key
+                bat '''
+                    echo ABUSEIPDB_API_KEY=%ABUSEIPDB_API_KEY% > .env
+                    echo ABUSEIPDB_API_KEY=%ABUSEIPDB_API_KEY% > backend/.env
+                '''
             }
         }
         
