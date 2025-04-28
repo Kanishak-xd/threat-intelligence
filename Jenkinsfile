@@ -14,16 +14,16 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'npm run build'
+                bat 'npm install'
+                bat 'npm run build'
             }
         }
         
         stage('Docker Compose') {
             steps {
-                sh 'docker-compose down'
-                sh 'docker-compose build --no-cache'
-                sh 'docker-compose up -d'
+                bat 'docker-compose down'
+                bat 'docker-compose build --no-cache'
+                bat 'docker-compose up -d'
             }
         }
     }
