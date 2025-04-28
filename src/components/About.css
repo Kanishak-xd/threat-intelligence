@@ -1,9 +1,10 @@
 .about-container {
   padding: 2rem;
   margin-top: 4rem;
-  background-color: #000000;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #0a0a0a);
   min-height: 100vh;
 }
+
 
 .about-section, .developers-section {
   max-width: 1200px;
