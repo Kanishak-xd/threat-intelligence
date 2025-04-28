@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './About.css';
 
 const About = () => {
-  const [developers, setDevelopers] = useState([
+  const developers = [
     {
       name: 'Kanishak Sharma',
       github: 'https://github.com/Kanishak-xd',
@@ -23,7 +23,7 @@ const About = () => {
       github: 'https://github.com/devansharora2812',
       avatar: 'https://github.com/devansharora2812.png'
     }
-  ]);
+  ];
 
   return (
     <div className="about-container">
@@ -48,8 +48,8 @@ const About = () => {
         <div className="developers-grid">
           {developers.map((developer, index) => (
             <div key={index} className="developer-card">
-              <img 
-                src={developer.avatar} 
+              <img
+                src={developer.avatar}
                 alt={`${developer.name}'s profile`}
                 className="developer-avatar"
                 onError={(e) => {
