@@ -50,7 +50,7 @@ const AttackChart = () => {
         setRawLogs(data);
         
         // Process data for line chart (attacks over time)
-        const hourlyAttacks = {};
+        const dailyAttacks = {};
         const ipCounts = {};
         const credentialsCounts = {};
         let maxAttacksInDay = 0;
@@ -60,10 +60,8 @@ const AttackChart = () => {
         data.forEach(log => {
           // Process for line chart
           const timestamp = new Date(log.timestamp);
-          const hour = timestamp.getHours();
           const date = timestamp.toLocaleDateString();
-          const key = `${date} ${hour}:00`;
-          hourlyAttacks[key] = (hourlyAttacks[key] || 0) + 1;
+          dailyAttacks[date] = (dailyAttacks[date] || 0) + 1;
 
           // Track timestamps for runtime calculation
           firstTimestamp = Math.min(firstTimestamp, timestamp.getTime());
@@ -85,12 +83,12 @@ const AttackChart = () => {
           }
 
           // Calculate max attacks in a day
-          const dayKey = timestamp.toLocaleDateString();
-          const dayAttacks = Object.entries(hourlyAttacks)
-            .filter(([time]) => time.startsWith(dayKey))
-            .reduce((sum, [, count]) => sum + count, 0);
-          maxAttacksInDay = Math.max(maxAttacksInDay, dayAttacks);
+          maxAttacksInDay = Math.max(maxAttacksInDay, dailyAttacks[date]);
         });
+
+        console.log('Total attacks:', data.length);
+        console.log('Max attacks in a day:', maxAttacksInDay);
+        console.log('Daily attacks:', dailyAttacks);
 
         // Calculate total runtime in hours
         const totalRunTime = Math.round((lastTimestamp - firstTimestamp) / (1000 * 60 * 60));
@@ -103,9 +101,9 @@ const AttackChart = () => {
         });
 
         // Convert to array format for line chart
-        const chartData = Object.entries(hourlyAttacks)
-          .map(([time, count]) => ({
-            time,
+        const chartData = Object.entries(dailyAttacks)
+          .map(([date, count]) => ({
+            time: date,
             attacks: count
           }))
           .sort((a, b) => new Date(a.time) - new Date(b.time));
