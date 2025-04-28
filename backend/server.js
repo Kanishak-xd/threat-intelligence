@@ -9,12 +9,28 @@ const dotenv = require("dotenv");
 // Load environment variables
 dotenv.config();
 
+// Log environment status
+console.log('Server starting...');
+console.log('Environment:', process.env.NODE_ENV || 'development');
+console.log('Port:', process.env.PORT || 5050);
+console.log('AbuseIPDB API Key:', process.env.ABUSEIPDB_API_KEY ? 
+  process.env.ABUSEIPDB_API_KEY.substring(0, 5) + '...' : 'Not set');
+
 const app = express();
-const PORT = process.env.PORT || 3001; // Use PORT from env or fallback to 3001
+const PORT = process.env.PORT || 5050;
 const OTX_API_KEY = process.env.OTX_API_KEY;
 const OTX_PULSE_ID = process.env.OTX_PULSE_ID;
 
-app.use(cors());
+// Configure CORS
+const corsOptions = {
+  origin: ['http://localhost:3000', 'https://threat-intelligence-pkiv.onrender.com'],
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
+app.use(express.json());
 
 // Serve logs data
 app.get("/api/logs", (req, res) => {
@@ -59,16 +75,26 @@ app.get("/api/abuseipdb", async (req, res) => {
     }
     lastAbuseIPDBRequest = Date.now();
 
+    console.log('Making AbuseIPDB API request...');
+    console.log('API Key:', process.env.ABUSEIPDB_API_KEY ? 
+      process.env.ABUSEIPDB_API_KEY.substring(0, 5) + '...' : 'Not set');
+
     const response = await fetch("https://api.abuseipdb.com/api/v2/blacklist", {
+      method: 'GET',
       headers: {
-        Key: process.env.ABUSEIPDB_API_KEY,
-        Accept: "application/json",
+        'Key': process.env.ABUSEIPDB_API_KEY,
+        'Accept': 'application/json',
       },
     });
 
+    console.log('Response Status:', response.status);
+    console.log('Response Headers:', response.headers.raw());
+
     if (!response.ok) {
+      const errorText = await response.text();
+      console.error('AbuseIPDB API Error Response:', errorText);
+      
       if (response.status === 429) {
-        // If rate limited, return cached data if available
         if (cachedAbuseIPDBData) {
           const paginatedData = {
             data: cachedAbuseIPDBData.slice(skip, skip + limit),
@@ -80,10 +106,16 @@ app.get("/api/abuseipdb", async (req, res) => {
         }
         throw new Error("Rate limit exceeded. Please try again later.");
       }
-      throw new Error(`AbuseIPDB API error: ${response.statusText}`);
+      throw new Error(`AbuseIPDB API error: ${response.status} - ${errorText}`);
     }
 
     const data = await response.json();
+    console.log('Successfully fetched data from AbuseIPDB');
+    
+    if (!data || !data.data) {
+      throw new Error('Invalid response format from AbuseIPDB API');
+    }
+
     // Update cache
     cachedAbuseIPDBData = data.data;
     lastAbuseIPDBCache = now;
@@ -98,6 +130,8 @@ app.get("/api/abuseipdb", async (req, res) => {
     res.json(paginatedData);
   } catch (error) {
     console.error("Error fetching from AbuseIPDB:", error.message);
+    console.error("Full error:", error);
+    
     // If we have cached data, return it even if it's expired
     if (cachedAbuseIPDBData) {
       const paginatedData = {
@@ -108,7 +142,11 @@ app.get("/api/abuseipdb", async (req, res) => {
       };
       return res.json(paginatedData);
     }
-    res.status(500).json({ error: "Failed to fetch AbuseIPDB data" });
+    res.status(500).json({ 
+      error: "Failed to fetch AbuseIPDB data", 
+      details: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+    });
   }
 });
 
@@ -186,6 +224,20 @@ app.get("/api/abuseipdb/search", async (req, res) => {
   }
 });
 
+// Add error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  res.status(500).json({ 
+    error: 'Internal Server Error',
+    message: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+});
+
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
+  console.log(`API endpoints available:`);
+  console.log(`- http://localhost:${PORT}/api/abuseipdb`);
+  console.log(`- http://localhost:${PORT}/api/logs`);
+  console.log(`- http://localhost:${PORT}/api/heading`);
 });
