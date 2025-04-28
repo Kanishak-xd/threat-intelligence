@@ -145,23 +145,32 @@ const AttackChart = () => {
         <h3 className="chart-title">Attacks Over Time</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart
+            width={800}
+            height={300}
             data={attackData}
-            margin={{ top: 10, right: 30, left: 10, bottom: 30 }}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
             <XAxis 
               dataKey="time" 
-              angle={-45}
-              textAnchor="end"
-              height={60}
-              interval={Math.floor(attackData.length / 10)}
+              stroke="#fff"
+              tick={{ fill: '#fff' }}
             />
-            <YAxis />
-            <Tooltip />
+            <YAxis 
+              stroke="#fff"
+              tick={{ fill: '#fff' }}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: '#fff',
+                color: '#000',
+                border: '1px solid #333'
+              }}
+            />
             <Line 
               type="monotone" 
               dataKey="attacks" 
-              stroke="#E9F5BE"  // Line Chart Color
+              stroke="#E9F5BE" 
               dot={false}
               strokeWidth={2}
             />
