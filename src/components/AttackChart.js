@@ -6,7 +6,16 @@ import {
 import { getApiUrl } from '../config';
 import './AttackChart.css';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1'];
+const COLORS = [
+  '#FFCCEA', // Coral Red
+  '#CDC1FF', // Turquoise
+  '#BFECFF', // Sky Blue
+  '#FFF6E3', // Sage Green
+  '#FFEEAD', // Light Yellow
+  '#D4A5A5', // Dusty Rose
+  '#9B59B6', // Purple
+  '#3498DB'  // Blue
+];
 const ITEMS_PER_PAGE = 20;
 
 const AttackChart = () => {
@@ -154,7 +163,7 @@ const AttackChart = () => {
             <Line 
               type="monotone" 
               dataKey="attacks" 
-              stroke="#321FD2" 
+              stroke="#E9F5BE"  // Line Chart Color
               dot={false}
               strokeWidth={2}
             />
