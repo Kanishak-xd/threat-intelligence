@@ -1,3 +1,80 @@
+import React, { useRef } from "react"; // Added useRef to the import
+import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import Apintel from "./apintel";
+import AttackChart from "./components/AttackChart";
+import HeroSection from "./components/HeroSection";
+import About from "./components/About";
+import "./App.css";
+
+function NavLink({ to, children, onClick }) {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+  const isDashboardLinkOnHome = to === '/#dashboard' && location.pathname === '/';
+
+  return (
+    <Link
+      to={to}
+      className={`nav-link ${isActive || isDashboardLinkOnHome ? 'active' : ''}`}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  );
+}
+
+function App() {
+  const dashboardRef = useRef(null);
+
+  const scrollToDashboard = () => {
+    dashboardRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <Router>
+      <div className="App">
+        <nav className="nav-container">
+          <ul className="nav-list">
+            <li className="nav-item">
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/#dashboard" onClick={scrollToDashboard}>Dashboard</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/apintel">API</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to="/about">About</NavLink>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/" element={
+            <>
+              <HeroSection onExploreClick={scrollToDashboard} />
+              <div ref={dashboardRef} className="home-container">
+                <AttackChart />
+              </div>
+            </>
+          } />
+          <Route path="/apintel" element={<Apintel />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
+
+
+
+
+
+
+/*
 import React, { useEffect, useState, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
 import Apintel from "./apintel";
@@ -79,3 +156,4 @@ function App() {
 }
 
 export default App;
+*/
