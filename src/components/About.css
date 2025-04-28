@@ -3,39 +3,68 @@
   margin-top: 4rem;
   background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #0a0a0a);
   min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 
+
 .about-section, .developers-section {
+
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+}
+
+.about-section {
   margin-bottom: 3rem;
 }
 
 .about-title {
-  color: #FEFEFE;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 0rem;
   text-align: center;
 }
 
 .about-content {
-  color: #FEFEFE;
-  line-height: 1.6;
-  font-size: 1.1rem;
-  opacity: 0.9;
+  /* background-color: #1A1A1A; */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .about-content p {
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #9c9c9c;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+  text-align: justify;
 }
+
+/* .developers-section {
+  margin-top: 0rem;
+} */
 
 .developers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+  opacity: 0;
+  transform: translateY(50px);
+  animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .developer-card {
@@ -43,28 +72,73 @@
   padding: 2rem;
   border-radius: 10px;
   text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 .developer-card:hover {
+  animation: none;
   transform: translateY(-5px);
 }
 
-.developer-card h3 {
-  color: #FEFEFE;
+.developer-avatar {
+  width: 11vw;
+  height: 22vh;
+  border-radius: 5%;
   margin-bottom: 1rem;
+  border: 3px solid #333;
+  object-fit: cover;
+}
+
+.developer-card h3 {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.developer-name {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.developer-role {
+  color: #888;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .github-link {
-  color: #FEFEFE;
-  text-decoration: none;
-  padding: 0.5rem 1rem;
-  background-color: #333333;
-  border-radius: 17px;
   display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
   transition: background-color 0.3s ease;
 }
 
 .github-link:hover {
-  background-color: #444444;
-} 
+  background-color: #444;
+}
+
+.github-link svg {
+  width: 20px;
+  height: 20px;
+}

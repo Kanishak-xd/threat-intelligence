@@ -6,7 +6,16 @@ import {
 import { getApiUrl } from '../config';
 import './AttackChart.css';
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d', '#ffc658', '#8dd1e1'];
+const COLORS = [
+  '#FFCCEA', // Coral Red
+  '#CDC1FF', // Turquoise
+  '#BFECFF', // Sky Blue
+  '#FFF6E3', // Sage Green
+  '#FFEEAD', // Light Yellow
+  '#D4A5A5', // Dusty Rose
+  '#9B59B6', // Purple
+  '#3498DB'  // Blue
+];
 const ITEMS_PER_PAGE = 20;
 
 const AttackChart = () => {
@@ -41,7 +50,7 @@ const AttackChart = () => {
         setRawLogs(data);
         
         // Process data for line chart (attacks over time)
-        const hourlyAttacks = {};
+        const dailyAttacks = {};
         const ipCounts = {};
         const credentialsCounts = {};
         let maxAttacksInDay = 0;
@@ -51,10 +60,8 @@ const AttackChart = () => {
         data.forEach(log => {
           // Process for line chart
           const timestamp = new Date(log.timestamp);
-          const hour = timestamp.getHours();
           const date = timestamp.toLocaleDateString();
-          const key = `${date} ${hour}:00`;
-          hourlyAttacks[key] = (hourlyAttacks[key] || 0) + 1;
+          dailyAttacks[date] = (dailyAttacks[date] || 0) + 1;
 
           // Track timestamps for runtime calculation
           firstTimestamp = Math.min(firstTimestamp, timestamp.getTime());
@@ -76,12 +83,12 @@ const AttackChart = () => {
           }
 
           // Calculate max attacks in a day
-          const dayKey = timestamp.toLocaleDateString();
-          const dayAttacks = Object.entries(hourlyAttacks)
-            .filter(([time]) => time.startsWith(dayKey))
-            .reduce((sum, [, count]) => sum + count, 0);
-          maxAttacksInDay = Math.max(maxAttacksInDay, dayAttacks);
+          maxAttacksInDay = Math.max(maxAttacksInDay, dailyAttacks[date]);
         });
+
+        console.log('Total attacks:', data.length);
+        console.log('Max attacks in a day:', maxAttacksInDay);
+        console.log('Daily attacks:', dailyAttacks);
 
         // Calculate total runtime in hours
         const totalRunTime = Math.round((lastTimestamp - firstTimestamp) / (1000 * 60 * 60));
@@ -94,9 +101,9 @@ const AttackChart = () => {
         });
 
         // Convert to array format for line chart
-        const chartData = Object.entries(hourlyAttacks)
-          .map(([time, count]) => ({
-            time,
+        const chartData = Object.entries(dailyAttacks)
+          .map(([date, count]) => ({
+            time: date,
             attacks: count
           }))
           .sort((a, b) => new Date(a.time) - new Date(b.time));
@@ -138,23 +145,32 @@ const AttackChart = () => {
         <h3 className="chart-title">Attacks Over Time</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart
+            width={800}
+            height={300}
             data={attackData}
-            margin={{ top: 10, right: 30, left: 10, bottom: 30 }}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
             <XAxis 
               dataKey="time" 
-              angle={-45}
-              textAnchor="end"
-              height={60}
-              interval={Math.floor(attackData.length / 10)}
+              stroke="#fff"
+              tick={{ fill: '#fff' }}
             />
-            <YAxis />
-            <Tooltip />
+            <YAxis 
+              stroke="#fff"
+              tick={{ fill: '#fff' }}
+            />
+            <Tooltip 
+              contentStyle={{ 
+                backgroundColor: '#fff',
+                color: '#000',
+                border: '1px solid #333'
+              }}
+            />
             <Line 
               type="monotone" 
               dataKey="attacks" 
-              stroke="#321FD2" 
+              stroke="#E9F5BE" 
               dot={false}
               strokeWidth={2}
             />
