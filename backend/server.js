@@ -23,7 +23,11 @@ const OTX_PULSE_ID = process.env.OTX_PULSE_ID;
 
 // Configure CORS
 const corsOptions = {
-  origin: ['http://localhost:3000', 'https://threat-intelligence-pkiv.onrender.com', 'https://threat-intelligence.netlify.app'],
+  origin: [
+    'http://localhost:3000', 
+    'https://threat-intelligence-pkiv.onrender.com', 
+    'https://clinquant-malabi-d5e957.netlify.app'
+  ],
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
