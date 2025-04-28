@@ -10,6 +10,10 @@ const About = () => {
     {
       name: 'Karma Tshering Yangden',
       github: 'https://github.com/ktyangden'
+    },
+    {  
+    name: 'Suhana Mishra',
+      github: 'https://github.com/suhaxa4'
     }
   ];
 
