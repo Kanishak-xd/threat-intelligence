@@ -11,26 +11,28 @@
 .about-title {
   font-size: 2rem;
   color: #fff;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0rem;
   text-align: center;
 }
 
 .about-content {
-  background-color: #1A1A1A;
+  /* background-color: #1A1A1A; */
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .about-content p {
-  color: #666;
+  font-size: 1.5rem;
+  color: #9c9c9c;
   line-height: 1.6;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: justify;
 }
 
-.developers-section {
-  margin-top: 3rem;
-}
+/* .developers-section {
+  margin-top: 0rem;
+} */
 
 .developers-grid {
   display: grid;

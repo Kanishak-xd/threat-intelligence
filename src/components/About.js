@@ -44,7 +44,7 @@ const About = () => {
       </section>
 
       <section className="developers-section">
-        <h2 className="about-title">Our Team</h2>
+        <h2 className="about-title">Our Team Members</h2>
         <div className="developers-grid">
           {developers.map((developer, index) => (
             <div key={index} className="developer-card">
