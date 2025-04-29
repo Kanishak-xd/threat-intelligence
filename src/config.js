@@ -3,7 +3,7 @@ const LOCAL_BACKEND_URL = 'http://localhost:5050';
 const DEPLOYED_BACKEND_URL = 'https://threat-intelligence-pkiv.onrender.com';
 
 // true for local backend, false for deployed backend
-const USE_LOCAL_BACKEND = false;
+const USE_LOCAL_BACKEND = true;
 
 export const API_BASE_URL = USE_LOCAL_BACKEND ? LOCAL_BACKEND_URL : DEPLOYED_BACKEND_URL;
 
