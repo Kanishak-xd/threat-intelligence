@@ -28,12 +28,20 @@ function Apintel() {
     const fetchData = async () => {
       try {
         setLoading(true);
+        console.log(`[Frontend] Fetching AbuseIPDB data - Page: ${page}`);
         const res = await fetch(getApiUrl(`/api/abuseipdb?page=${page}&limit=10`));
+        
+        console.log(`[Frontend] Response status: ${res.status}`);
         const data = await res.json();
         
         if (data.error) {
+          console.error('[Frontend] API Error:', data.error);
+          if (data.details) {
+            console.error('[Frontend] Error details:', data.details);
+          }
           setError(data.error);
         } else {
+          console.log(`[Frontend] Successfully received ${data.data.length} records`);
           setAbuseData(prevData => {
             if (page === 1) return data.data;
             return [...prevData, ...data.data];
@@ -41,7 +49,7 @@ function Apintel() {
           setHasMore(data.data.length === 10);
         }
       } catch (err) {
-        console.error("Error fetching AbuseIPDB data:", err);
+        console.error("[Frontend] Error fetching AbuseIPDB data:", err);
         setError("Failed to fetch AbuseIPDB data. Please try again later.");
       } finally {
         setLoading(false);
@@ -55,19 +63,25 @@ function Apintel() {
     if (!searchIP) return;
 
     try {
+      console.log(`[Frontend] Searching for IP: ${searchIP}`);
       const res = await fetch(
         getApiUrl(`/api/abuseipdb/search?ip=${searchIP}`)
       );
+      
+      console.log(`[Frontend] Search response status: ${res.status}`);
       const data = await res.json();
+      
       if (data.error) {
+        console.error('[Frontend] Search Error:', data.error);
         setSearchResult(null);
         setError(data.error);
       } else {
+        console.log('[Frontend] Search successful');
         setSearchResult(data.data || null);
         setError(null);
       }
     } catch (err) {
-      console.error("IP Search error:", err);
+      console.error("[Frontend] IP Search error:", err);
       setSearchResult(null);
       setError("Failed to fetch IP report. Please try again later.");
     }
