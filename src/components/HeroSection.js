@@ -7,7 +7,7 @@ const HeroSection = ({ onExploreClick }) => {
       <div className="hero-content">
         <h1 className="hero-title">Threat Intelligence Platform</h1>
         <p className="hero-description">
-          Experience live data flows from honeypot traps and threat intelligence APIs—all in one intuitive dashboard. See everything.
+          Experience live data flows from honeypot traps and threat intelligence APIs—all in one intuitive dashboard. 
         </p>
         <button className="hero-button" onClick={onExploreClick}>
           Explore Dashboard
