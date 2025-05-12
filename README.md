@@ -122,3 +122,6 @@ threat-intelligence/
 - `GET /api/logs` - Fetch security logs
 - `GET /api/attack-data/aggregated` - Get aggregated attack data
 - `GET /api/ip-intel` - Get IP intelligence data
+
+
+MIT License
