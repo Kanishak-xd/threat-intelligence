@@ -2,6 +2,24 @@
 
 A comprehensive threat intelligence platform that monitors and analyzes security threats. This project provides a user-friendly interface for visualizing attack patterns, analyzing IP threats, and monitoring security events.
 
+---
+
+## Project Snapshots
+
+### Hero Section
+![Hero Section](https://i.postimg.cc/cLrfRgW5/web1.png)
+
+### Dashboard
+![Dashboard](https://i.postimg.cc/BQZTv7V3/web2.png)
+
+### API Intelligence Page
+![API Intelligence](https://i.postimg.cc/65Hd4Vkv/web3.png)
+
+### About Page
+![About Page](https://i.postimg.cc/fRpmBzTW/web4.png)
+
+---
+
 ## Features
 
 - **Real-time Attack Monitoring**
@@ -24,6 +42,8 @@ A comprehensive threat intelligence platform that monitors and analyzes security
   - Intuitive navigation
   - Dark theme for better visibility
 
+---
+
 ## Tech Stack
 
 - **Frontend**
@@ -45,30 +65,57 @@ A comprehensive threat intelligence platform that monitors and analyzes security
   - AWS EC2 for Honeypot deployment
   - Cowrie Honeypot for threat data collection
 
+---
+
 ## Design Planning
 
-We designed our UI/UX using Figma to visualize the user flow and application layout before development. Emphasis was placed on clarity, dark theme readability, and responsive structure.
+We designed our UI/UX using Figma to visualize the user flow and layout. Focus was placed on dark theme & usability.
 
-![Figma Wireframe](https://i.ibb.co/S4W1W1F/figma.png)
+![Figma Wireframe](https://i.postimg.cc/Dw3VqFQL/figma.png)
+
+---
 
 ## Project Management
 
-We used Jira for issue tracking, sprint planning, and overall project management. Each task was broken into epics and assigned with deadlines for effective team collaboration.
+We used Jira for agile task management, sprint planning, and milestone tracking.
 
-![Jira Project Timeline](https://i.ibb.co/nMfChq6S/jira.png)
+![Jira Timeline](https://i.postimg.cc/QtpQF2D8/jira.png)
+
+---
+
+## Database View
+
+MongoDB Atlas was used as the primary cloud database solution.
+
+![MongoDB Screenshot](https://i.postimg.cc/gcHymb44/mongo.png)
+
+---
 
 ## DevOps & CI/CD
 
-- Docker was used to containerize the frontend and backend services for local development and testing.
-- Jenkins pipeline was configured to automatically build and deploy the application on changes pushed to GitHub.
+We implemented DevOps practices to streamline development and deployment.
 
-### Docker Containers Running (Frontend & Backend)
+- **Docker** was used to containerize frontend and backend for local development.
+- **Jenkins** handled CI/CD automation, auto-deploying on GitHub pushes.
+- **.env** configuration supported local, Netlify, Render, and Jenkins builds.
 
-![Docker Containers](https://i.ibb.co/r2Yp0hGp/docker.png)
+### Docker Containers (Frontend & Backend)
+
+![Docker Containers](https://i.postimg.cc/kg4vTYQs/docker.png)
 
 ### Jenkins Pipeline
 
-![Jenkins Pipeline Stage View](https://i.ibb.co/tThV0R7P/jenkins.png)
+![Jenkins Pipeline](https://i.postimg.cc/hvc9T249/jenkins.png)
+
+---
+
+## Honeypot Deployment (AWS)
+
+We deployed a Cowrie honeypot on AWS EC2 to collect real-world attack data.
+
+![Honeypot on AWS](https://i.postimg.cc/KjftNt4C/honeypot.png)
+
+---
 
 ## Getting Started
 
@@ -106,6 +153,8 @@ npm start
 http://localhost:3000
 ```
 
+---
+
 ### Docker Deployment
 
 ```bash
@@ -115,6 +164,8 @@ docker-compose up --build
 # Access the application
 http://localhost:3000
 ```
+
+---
 
 ## Project Structure
 
@@ -137,11 +188,15 @@ threat-intelligence/
 └── README.md
 ```
 
+---
+
 ## API Endpoints
 
 - `GET /api/logs` - Fetch security logs
 - `GET /api/attack-data/aggregated` - Get aggregated attack data
 - `GET /api/ip-intel` - Get IP intelligence data
+
+---
 
 ## License
 
