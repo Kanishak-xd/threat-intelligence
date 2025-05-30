@@ -117,6 +117,29 @@ We deployed a Cowrie honeypot on AWS EC2 to collect real-world attack data.
 
 ---
 
+## Lighthouse Report
+
+We ran a Lighthouse audit on the deployed application to assess its performance and quality.
+
+| Category       | Score |
+|----------------|-------|
+| Performance    | 62    |
+| Accessibility  | 98    |
+| Best Practices | 96    |
+| SEO            | 100   |
+
+> Audited using Chrome DevTools in Desktop mode
+
+![Lighthouse Report](https://i.postimg.cc/v8WJ9cqt/lighthouse.png)
+
+### What We Learned
+
+- While our scores in accessibility, best practices, and SEO were strong, we identified room for improvement in performance.
+- Key issues included heavy JavaScript, unoptimized images, and blocking main-thread work.
+- From this audit, we learned the importance of optimizing assets, reducing bundle sizes, and improving load efficiency — insights we'll apply to future projects for a better user experience.
+
+---
+
 ## Getting Started
 
 ### Prerequisites
